@@ -2,6 +2,7 @@ body{
     background-image: url('../img/background.jpg');
     font-family: 'Ubuntu', sans-serif;
     padding: 30px 50px;
+    color: #000;
 }
 
 .apartado{
@@ -20,4 +21,71 @@ body{
 a{
     text-decoration: none;
     color: #000;
+}
+
+.contenedor-principal{
+    background-color: #000;
+    height: 35rem;
+    margin: 0 20px;
+    padding: 0;
+    border-radius: 25px;
+}
+
+.contenedor-lista{
+    height: 27rem;
+}
+
+.header{
+    background-color: #fd8d07ff;
+    padding: 10px 5px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+
+p{
+    margin: 0;
+}
+
+.objeto{
+    background-color: white;
+    border-radius: 10px;
+    margin: 15px 20px;
+    margin-bottom: 0;
+    padding: 10px;
+}
+
+.objeto img{
+    width: 100%;
+    margin: 10px;
+}
+
+.objeto .text-end i{
+    cursor: pointer;
+}
+
+.id-style{
+    color: #fd8d07ff;
+    font-size: 20px;
+}
+
+.centrar-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.text-end-div{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-default{
+    background: linear-gradient(#fd8e00, #edc42f);
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 10px 40px;
+    border: none;
+    border-radius: 25px;
 }

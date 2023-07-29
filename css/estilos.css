@@ -1,0 +1,23 @@
+body{
+    background-image: url('../img/background.jpg');
+    font-family: 'Ubuntu', sans-serif;
+    padding: 30px 50px;
+}
+
+.apartado{
+    background: linear-gradient(#fd8e00, #edc42f);
+    padding: 10px;
+    border-radius: 25px;
+    margin: 1rem;
+    box-sizing: border-box;
+    box-shadow: 9px 10px 11px #000
+}
+
+.apartado img{
+    width: 60%;
+}
+
+a{
+    text-decoration: none;
+    color: #000;
+}

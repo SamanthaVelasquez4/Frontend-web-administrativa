@@ -130,6 +130,7 @@ const modificarEmpresa = (id)=>{
     document.getElementById('imagen-empresa').setAttribute('src',`${empresaModificar.img}`);
     borrarValoresInputs();
     imgActual=empresaModificar.img;
+    inputFile.value=empresaModificar.nombre;
     document.getElementById('nombre-empresa').value=empresaModificar.nombre;
     document.getElementById('id-empresa').innerHTML=`#${empresaModificar.id}`;
     document.getElementById('num-telefono-empresa').value=empresaModificar.numTelefono;
@@ -164,6 +165,7 @@ const borrarValoresInputs = ()=>{
     document.getElementById('direccion-empresa').value="";
     document.getElementById('checkbox-ropa').checked=false;
     document.getElementById('checkbox-calzado').checked=false;
+    inputFile.value='';
 }
 
 const obtenerValoresInput = () =>{
@@ -213,7 +215,7 @@ inputFile.onchange = e=>{
         reader.onload = e =>{
             document.getElementById('imagen-empresa').setAttribute('src',e.target.result);
             imgActual=e.target.result;
-            console.log(imgActual);
+            //console.log(imgActual);
         }
         reader.readAsDataURL(e.target.files[0]);
     }else{

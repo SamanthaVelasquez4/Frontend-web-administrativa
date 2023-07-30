@@ -40,6 +40,7 @@ var empresaBorrar={};
 const modalConfirmarBorrar= new bootstrap.Modal(document.getElementById('modalConfirmarBorrar'));
 const inputFile= document.getElementById('input-file');
 var imgActual;
+const modalCamposVacios= new bootstrap.Modal(document.getElementById('modalCamposVacios'));
 
 //Renderizar lista
 const renderizarLista = ()=>{
@@ -104,13 +105,19 @@ const agregarEmpresa = ()=>{
 }
 
 const confirmarAgregarEmpresa= ()=>{
-    let empresa= obtenerValoresInput();
-    empresa.id=idAutogenerado;
-    empresas.push(empresa);
-    console.log(empresa);
-    modalConfirmarAgregar.hide();
-    volverAtras();
-    idAutogenerado++;
+    if(validarCamposLlenos()){
+        let empresa= obtenerValoresInput();
+        empresa.id=idAutogenerado;
+        empresas.push(empresa);
+        console.log(empresa);
+        modalConfirmarAgregar.hide();
+        volverAtras();
+        idAutogenerado++;
+    }else{
+        modalConfirmarAgregar.hide();
+        modalCamposVacios.show();
+    }
+    
 }
 
 //Modificar empresa
@@ -124,7 +131,7 @@ const modificarEmpresa = (id)=>{
     document.getElementById('agregar-empresa-titulo').style.display="none";
     document.getElementById('modificar-empresa-titulo').style.display="block";
 
-    document.getElementById('label-input-file').innerHTML="Cambiar imagen";
+    document.getElementById('label-input-file').innerHTML="Cambiar";
 
     empresaModificar=empresas.find(element => element.id===id);
 
@@ -149,12 +156,18 @@ const modificarEmpresa = (id)=>{
 }
 
 const confirmarmodificarEmpresa = ()=>{
-    let empresa= obtenerValoresInput();
-    empresa.id=empresaModificar.id;
-    empresa.img=imgActual;
-    empresas[empresas.indexOf(empresaModificar)]=empresa;
-    modalConfirmarModificar.hide();
-    volverAtras();
+    if(validarCamposLlenos()){
+        let empresa= obtenerValoresInput();
+        empresa.id=empresaModificar.id;
+        empresa.img=imgActual;
+        empresas[empresas.indexOf(empresaModificar)]=empresa;
+        modalConfirmarModificar.hide();
+        volverAtras();
+    }else{
+        modalConfirmarModificar.hide();
+        modalCamposVacios.show();
+    }
+    
 }
 
 //Funciones para los inputs
@@ -166,7 +179,8 @@ const borrarValoresInputs = ()=>{
     document.getElementById('direccion-empresa').value="";
     document.getElementById('checkbox-ropa').checked=false;
     document.getElementById('checkbox-calzado').checked=false;
-    inputFile.value='';
+    inputFile.value="";
+    imgActual="";
 }
 
 const obtenerValoresInput = () =>{
@@ -198,6 +212,32 @@ const volverAtras = ()=>{
     renderizarLista();
 }
 
+const validarCamposLlenos = () =>{
+    let validar=true;
+    if(document.getElementById('nombre-empresa').value==""){
+        validar=false;
+    }
+    if(document.getElementById('num-telefono-empresa').value==""){
+        validar=false;
+    }
+    if(document.getElementById('hora-inicio').value==""){
+        validar=false;
+    }
+    if(document.getElementById('hora-final').value==""){
+        validar=false;
+    }
+    if(document.getElementById('direccion-empresa').value==""){
+        validar=false;
+    }
+    if(!document.getElementById('checkbox-ropa').checked && !document.getElementById('checkbox-calzado').checked){
+        validar=false;
+    }
+    if(imgActual==""){
+        validar=false;
+    }
+    return validar;
+}
+
 //Eliminar Empresa
 const borrarEmpresa = (id)=>{
     empresaBorrar=empresas.find(element=>element.id===id);
@@ -209,7 +249,7 @@ const confirmarBorrarEmpresa = ()=>{
     volverAtras();
 }
 
-//
+//Para la imagenes
 inputFile.addEventListener('change',  e => {
     if(e.target.files[0]){
         const reader = new FileReader();

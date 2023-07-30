@@ -28,43 +28,7 @@
                         </div>
     
                         <div class="contenedor-lista overflow-auto" id="contenedor-lista-empleados">
-                            <div class="objeto row">
-                                <div class="col-4 centrar-div">
-                                    <img src="../img/usuario.png" alt="Logo Adidas" srcset=""> 
-                                    <div class="fs-5">
-                                        <i class="fa-solid fa-star" style="color: #fd8d07ff;"></i>
-                                        <i class="fa-solid fa-star" style="color: #fd8d07ff;"></i>
-                                        <i class="fa-solid fa-star" style="color: #fd8d07ff;"></i>
-                                        <i class="fa-solid fa-star" style="color: #fd8d07ff;"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                                <div class="col ms-2">
-                                    <p class="fw-bold id-style text-center">ID empleado</p>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <p>Nombre:</p>
-                                            <p style="color: #fd8d07ff;" class="fw-medium">Thomas Martinez</p>
-                                            <p>Edad:</p>
-                                            <p style="color: #fd8d07ff;" class="fw-medium">32 años</p>
-                                            <p>Genero:</p>
-                                            <p style="color: #fd8d07ff;" class="fw-medium">M</p>
-                                        </div>
-                                        <div class="col">
-                                            <p>Tipo de vehículo:</p>
-                                            <p style="color: #fd8d07ff;" class="fw-medium">Carro</p>
-                                            <p>Placa:</p>
-                                            <p style="color: #fd8d07ff;" class="fw-medium">UTB-NU54</p>
-                                            <p>Número teléfono:</p>
-                                            <p style="color: #fd8d07ff;" class="fw-medium">3158-5621</p>
-                                        </div>
-                                    </div>
-                                    <div class="text-end fs-2 mt-3">
-                                        <i class="fa-solid fa-pen-to-square p-1 me-2" style="color: #2c2c2c;"></i>
-                                        <i class="fa-solid fa-trash p-1 me-2" style="color: red;"></i>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                         <span class="text-end-div" onclick="agregarEmpleado();">
                             <button class="btn-default">Agregar</button>
@@ -89,55 +53,108 @@
 
                         <div class="contenedor-inputs">
                             <div class="row">
-                                <div class="col-5 centrar-div mt-4">
-                                    <img src="https://tiny-img.com/images/icons/upload-icon.png" alt="" srcset="" id="imagen-empleado">
+                                <div class="col-3 centrar-div mt-4">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/309/309594.png?w=740&t=st=1690708517~exp=1690709117~hmac=3ac4414e6b2d7f05af0725e2c865e3010e9f83c7c91b955b3c3a52c8408fe7df" alt="" srcset="" id="imagen-empleado">
                                 </div>
                                 <div class="col">
                                     <p class="fs-3 fw-bold text-center" style="color: #fd8d07ff;" id="id-empleado"></p>
-                                    <input type="text" placeholder="Nombre" id="nombre-empleado" class="form-control input-default">
-                                    <input type="text" name="" id="num-telefono-empresa" placeholder="Número de teléfono" class="form-control input-default">
-                                    <div class="horario-atencion">
-                                        <p class="fs-5 fw-medium mt-3" style="color: #fd8d07ff ;">Horario de atencion: </p>
-                                        <div class="row">
-                                            <div class="col">
-                                                <input type="time" name="" id="hora-inicio" class="form-control mt-2">
-                                            </div>
-                                            <div class="col">
-                                                <input type="time" name="" id="hora-final" class="form-control mt-2">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="text" placeholder="Primer Nombre" id="primer-nombre-empleado" class="form-control input-default" oninput="generarUsuario();">
+                                            <input type="text" placeholder="Primer apellido" id="primer-apellido-empleado" class="form-control input-default" oninput="generarUsuario();">
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" placeholder="Segundo Nombre" id="segundo-nombre-empleado" class="form-control input-default">
+                                            <input type="text" placeholder="Segundo apellido" id="segundo-apellido-empleado" class="form-control input-default">
+                                        </div>
+                                    </div>
+                                    <p class="fw-medium mt-2 mb-1" style="color: #fd8d07ff ;">Usuario generado: </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" placeholder="primerNombre+primerApellido@ssport.hn" class="form-control input-default mt-1" id="usuario-input" disabled>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col">
+                                    <p class="fw-medium mt-2" style="color: #fd8d07ff ;">Contraseña: </p>
+                                    <input type="password" name="" id="contrasena-input" placeholder="Contraseña" class="form-control input-default mt-1" oninput="verificarContrasena();">
+                                </div>
+                                <div class="col" style="position: relative;">
+                                    <p class="fw-medium mt-2" style="color: #fd8d07ff ;">Verificación: </p>
+                                    <input type="password" placeholder="Verificar contraseña" class="form-control input-default mt-1" id="verificar-contrasena-input" oninput="verificarContrasena();">
+                                    <div class="verificacion" id="verificacion-contra"></div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-5">
+                                    <p class="fw-medium mt-2 mb-1" style="color: #fd8d07ff ;">Número de teléfono: </p>
+                                    <input type="text" placeholder="Número de teléfono" class="form-control input-default mt-1" id="num-telefono">
+                                </div>
+                                <div class="col-3">
+                                    <p class="fw-medium mt-2 mb-1" style="color: #fd8d07ff ;">Edad: </p>
+                                    <input type="number" placeholder="Edad" class="form-control input-default mt-1" id="edad-input">
+                                </div>
+                                <div class="col" style="color: white;">
+                                    <p class="fw-medium mt-2 mb-1" style="color: #fd8d07ff ;">Genero: </p>
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="generoRadio" id="radio-masculino" onchange="cambioGenero();">
+                                                <label class="form-check-label" for="radio-masculino">
+                                                  M
+                                                </label>
                                             </div>
                                         </div>
-                                        
+                                        <div class="col">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="generoRadio" id="radio-femenino" onchange="cambioGenero();">
+                                                <label class="form-check-label" for="radio-femenino">
+                                                  F
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row text-center">
-                                <div class="tipo-empresa">
-                                    <p class="fs-5 fw-medium mt-3" style="color: #fd8d07ff ;">Seleccione el tipo de empresa: </p>
-                                    <div class="row fs-5" style="color: white;">
+                            <div class="row mt-2">
+                                <div class="col">
+                                    <div class="row"  style="color: white;">
+                                        <p class="fw-medium mt-2 mb-1" style="color: #fd8d07ff ;">Tipo de Vehículo: </p>
                                         <div class="col">
-                                            <input type="checkbox" id="checkbox-ropa" name="tipo-de-empresa" value="Ropa">
-                                            <label for="checkbox-ropa">Ropa</label><br>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="radioTipoVehiculo" id="radio-carro">
+                                                <label class="form-check-label" for="radio-carro">
+                                                  Carro
+                                                </label>
+                                            </div>
                                         </div>
                                         <div class="col">
-                                            <input type="checkbox" id="checkbox-calzado" name="tipo-de-empresa" value="Calzado" class="">
-                                            <label for="checkbox-calzado">Calzado</label><br>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="radioTipoVehiculo" id="radio-moto" checked>
+                                                <label class="form-check-label" for="radio-moto">
+                                                  Moto
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="row me-2 ms-2">
-                                        <p class="fs-5 fw-medium mt-3" style="color: #fd8d07ff ;">Dirección de la empresa: </p>
-                                        <textarea name="" id="direccion-empresa" style="height: 70px;" class="input-default"></textarea>
-                                    </div>
+                                </div>
+                                <div class="col-7">
+                                    <p class="fw-medium mt-2 mb-1" style="color: #fd8d07ff ;">Placa: </p>
+                                    <input type="text" placeholder="Placa" class="form-control input-default mt-1" id="placa-input">
                                 </div>
                             </div>
                         </div>
                         
                     </div>
                     <div class="col-2 text-end-div2 text-center">
-                        <div class="row" id="btn-agregar-empresa">
-                            <button class="btn-default" data-bs-toggle="modal" data-bs-target="#modalConfirmarAgregar">Agregar empresa</button>
+                        <div class="row" id="btn-agregar-empleado">
+                            <button class="btn-default" data-bs-toggle="modal" data-bs-target="#modalConfirmarAgregar">Agregar empleado</button>
                         </div>
-                        <div class="row" id="btn-modificar-empresa">
-                            <button class="btn-default" data-bs-toggle="modal" data-bs-target="#modalConfirmarModificar">Modificar empresa</button>
+                        <div class="row" id="btn-modificar-empleado">
+                            <button class="btn-default" data-bs-toggle="modal" data-bs-target="#modalConfirmarModificar">Modificar empleado</button>
                         </div>
                         <div class="row">
                             <button class="btn-default" onclick="volverAtras();">Cancelar</button>
@@ -148,6 +165,80 @@
             </div>
         </section>
 
+        <!-- Modales -->
+        <div class="modal fade" id="modalConfirmarAgregar" tabindex="-1" aria-labelledby="modalConfirmarAgregarLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content" >
+                <div class="modal-header">
+                <h1 class="modal-title fs-4 text-center" id="modalConfirmarAgregarLabel">Confirmación</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <p class="fw-bold fs-5">¿Está seguro de agregar empleado?</p>
+                <p style="color: #fd8d07ff;" class="fw-medium">Valide si toda la información es correcta antes de presionar aceptar.</p>
+                </div>
+                <div class="modal-footer text-center">
+                <button type="button" class="btn-close1" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn-default" onclick="confirmarAgregarEmpleado();">Aceptar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalConfirmarModificar" tabindex="-1" aria-labelledby="modalConfirmarModificarLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content" >
+                <div class="modal-header">
+                <h1 class="modal-title fs-4 text-center" id="modalConfirmarModificarLabel">Confirmación</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <p class="fw-bold fs-5">¿Está seguro de modificar la empresa?</p>
+                <p style="color: #fd8d07ff;" class="fw-medium">Valide si toda la información es correcta antes de presionar aceptar.</p>
+                </div>
+                <div class="modal-footer text-center">
+                <button type="button" class="btn-close1" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn-default" onclick="confirmarmodificarEmpleado();">Aceptar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalConfirmarBorrar" tabindex="-1" aria-labelledby="modalConfirmarBorrarLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content" >
+                <div class="modal-header">
+                <h1 class="modal-title fs-4 text-center" id="modalConfirmarBorrarLabel">Confirmación</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <p class="fw-bold fs-5">¿Está seguro de borrar la empresa?</p>
+                <p style="color: #fd8d07ff;" class="fw-medium">Al borrar la empresa también estaría borrando todos los productos de dicha empresa.</p>
+                </div>
+                <div class="modal-footer text-center">
+                <button type="button" class="btn-close1" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn-default" onclick="confirmarBorrarEmpleado();">Aceptar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalCamposVacios" tabindex="-1" aria-labelledby="modalCamposVaciosLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content" >
+                <div class="modal-header">
+                <h1 class="modal-title fs-4 text-center" id="modalCamposVaciosLabel">Campos vacios</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <p class="fw-bold fs-5">Error al agregar Empresa</p>
+                <p style="color: #fd8d07ff;" class="fw-medium">1. Verifique que todos los campos esten llenos. <br>2. Verifique contraseña.</p>
+                </div>
+            </div>
+            </div>
+        </div>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+        <script src="../js/controllerEmpleados.js"></script>
     </body>
 </html>

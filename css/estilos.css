@@ -113,12 +113,16 @@ p{
     color: #000;
 }
 
-#imagen-empresa, #imagen-producto, #imagen-empleado{
+#imagen-empresa, #imagen-producto{
     width: 90%;
     border-radius: 20px;
     margin:10px 0;
     background-color: white;
     height: 170px;
+}
+
+#imagen-empleado{
+    width: 100%;
 }
 
 .input-default{
@@ -129,4 +133,14 @@ p{
 .form-control:focus {
     box-shadow: none;
     border-color: transparent;
+}
+
+.verificacion{
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 20px;
+    position: absolute;
+    right: 20px;
+    top: 50px;
 }

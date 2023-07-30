@@ -65,7 +65,7 @@ p{
 
 .id-style{
     color: #fd8d07ff;
-    font-size: 20px;
+    font-size: 35px;
 }
 
 .centrar-div{
@@ -78,6 +78,13 @@ p{
 .text-end-div{
     display: flex;
     justify-content: flex-end;
+    align-items: end;
+}
+
+.text-end-div2{
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
 }
 
 .btn-default{
@@ -85,7 +92,39 @@ p{
     padding: 5px 10px;
     font-weight: bold;
     font-size: 20px;
-    margin: 10px 40px;
+    margin: 10px 40px 10px 10px;
     border: none;
     border-radius: 25px;
+}
+
+.btn-close1{
+    background: linear-gradient(#1c1c1c, #72716d);
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+}
+
+.contenedor-inputs{
+    margin: 10px 15px;
+    box-sizing: border-box;
+}
+
+#imagen-empresa{
+    width: 90%;
+    border-radius: 20px;
+    margin:10px 0;
+    background-color: white;
+}
+
+.input-default{
+    margin-top: 15px;
+    border: 0;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: transparent;
 }

@@ -113,7 +113,7 @@ p{
     color: #000;
 }
 
-#imagen-empresa, #imagen-producto{
+#imagen-empresa, #imagen-producto, #imagen-empleado{
     width: 90%;
     border-radius: 20px;
     margin:10px 0;

@@ -179,6 +179,7 @@ const modificarProducto = (id)=>{
         contTallas++;
     })
     document.getElementById('select-empresa').value=productoModificar.empresaNombre;
+    empresaElegida=productoModificar.empresaNombre;
 
 }
 

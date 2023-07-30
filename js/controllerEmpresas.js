@@ -98,8 +98,8 @@ const agregarEmpresa = ()=>{
     document.getElementById('agregar-empresa-titulo').style.display="block";
     document.getElementById('modificar-empresa-titulo').style.display="none";
 
-    document.getElementById('imagen-empresa').setAttribute('src',`https://img.freepik.com/free-vector/video-upload-concept-illustration_114360-4702.jpg?w=740&t=st=1690681573~exp=1690682173~hmac=6087d39cdf91c304f0b3839d872f0f4df2cdb08054fbebd50e8a06bf50736a76`);
-
+    document.getElementById('imagen-empresa').setAttribute('src',`https://tiny-img.com/images/icons/upload-icon.png`);
+    document.getElementById('label-input-file').innerHTML="Elegir imagen";
 
 }
 
@@ -124,13 +124,14 @@ const modificarEmpresa = (id)=>{
     document.getElementById('agregar-empresa-titulo').style.display="none";
     document.getElementById('modificar-empresa-titulo').style.display="block";
 
+    document.getElementById('label-input-file').innerHTML="Cambiar imagen";
+
     empresaModificar=empresas.find(element => element.id===id);
 
     //poner valores en los inputs
     document.getElementById('imagen-empresa').setAttribute('src',`${empresaModificar.img}`);
     borrarValoresInputs();
     imgActual=empresaModificar.img;
-    inputFile.value=empresaModificar.nombre;
     document.getElementById('nombre-empresa').value=empresaModificar.nombre;
     document.getElementById('id-empresa').innerHTML=`#${empresaModificar.id}`;
     document.getElementById('num-telefono-empresa').value=empresaModificar.numTelefono;
@@ -209,21 +210,19 @@ const confirmarBorrarEmpresa = ()=>{
 }
 
 //
-inputFile.onchange = e=>{
+inputFile.addEventListener('change',  e => {
     if(e.target.files[0]){
         const reader = new FileReader();
         reader.onload = e =>{
             document.getElementById('imagen-empresa').setAttribute('src',e.target.result);
             imgActual=e.target.result;
-            //console.log(imgActual);
+            //console.log(e.target.result);
         }
         reader.readAsDataURL(e.target.files[0]);
     }else{
-        document.getElementById('imagen-empresa').setAttribute('src',`https://img.freepik.com/free-vector/video-upload-concept-illustration_114360-4702.jpg?w=740&t=st=1690681573~exp=1690682173~hmac=6087d39cdf91c304f0b3839d872f0f4df2cdb08054fbebd50e8a06bf50736a76`);
+        document.getElementById('imagen-empresa').setAttribute('src',`https://tiny-img.com/images/icons/upload-icon.png`);
     }
-
-    console.log(inputFile.value);
-}
+});
 
 //Funciones que inician antes de la interaccion con el usuario
 renderizarLista();

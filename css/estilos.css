@@ -75,6 +75,12 @@ p{
     flex-direction: column;
 }
 
+.centrar-div2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .text-end-div{
     display: flex;
     justify-content: flex-end;
@@ -111,6 +117,9 @@ p{
     margin: 10px 15px;
     box-sizing: border-box;
     color: #000;
+    height: 30rem;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #imagen-empresa, #imagen-producto{
@@ -143,4 +152,10 @@ p{
     position: absolute;
     right: 20px;
     top: 50px;
+}
+
+@media (max-width: 767.98px){ 
+    .objeto img{
+        width: 50%;
+    }
 }

@@ -27,3 +27,18 @@
     cursor: pointer;
     display: flex;
 }
+
+/* lg applies to medium devicestablets, less than 992px*/
+@media (max-width: 1199.98px) { 
+    .objeto img{
+        width: 80%;
+    }
+}
+
+/*`md` applies to small devices (landscape phones, less than 768px)*/
+@media (max-width: 767.98px) { 
+    .objeto img{
+        width: 40%;
+    }
+}
+

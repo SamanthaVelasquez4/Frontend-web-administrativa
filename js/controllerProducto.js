@@ -60,13 +60,13 @@ const renderizarLista = ()=>{
         });
         document.getElementById('contenedor-lista-productos').innerHTML+=
         `<div class="objeto row">
-            <div class="col-4 centrar-div">
+            <div class="col-12 col-xl-4 col-lg-5 col-md-5 col-sm-11 centrar-div">
                 <img src="${producto.img}" alt="Logo Producto" srcset=""> 
             </div>
             <div class="col ms-2">
                 <p class="fw-bold id-style text-center">#${producto.id}</p>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <p>Nombre producto:</p>
                         <p style="color: #fd8d07ff;" class="fw-medium">${producto.nombre}</p>
                         <p>Empresa:</p>

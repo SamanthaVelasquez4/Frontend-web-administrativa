@@ -75,7 +75,7 @@ const renderizarLista = ()=>{
         }
         document.getElementById('contenedor-lista-empleados').innerHTML+=
         `<div class="objeto row">
-            <div class="col-4 centrar-div">
+            <div class="col-12 col-xl-4 col-lg-4 col-md-5 col-sm-11 centrar-div">
                 <img src="${empleado.img}" alt="Imagen Usuario" srcset=""> 
                 <div class="fs-5">
                    ${calificacion}

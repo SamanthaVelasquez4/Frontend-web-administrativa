@@ -1,0 +1,29 @@
+
+.btn-listas{
+    background: linear-gradient(#fd8e00, #edc42f);
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 15px;
+    border: none;
+    border-radius: 25px;
+}
+
+.contenedor-agregados{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    height: 100px;
+}
+
+.objeto-agregado{
+    background: linear-gradient(#fd8e00, #edc42f);
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 10px;
+    border: none;
+    border-radius: 25px;
+    margin-bottom: 5px;
+    margin-right: 12px;
+    cursor: pointer;
+    display: flex;
+}

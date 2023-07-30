@@ -81,6 +81,12 @@ const renderizarLista = ()=>{
     })
 }
 
+const volverAtras = ()=>{
+    document.getElementById('pagina-lista').style.display="block";
+    document.getElementById('pagina-agregar-modificar').style.display="none";
+    renderizarLista();
+}
+
 //Agregar empresa
 const agregarEmpresa = ()=>{
     //Borrar inputs
@@ -109,7 +115,7 @@ const confirmarAgregarEmpresa= ()=>{
         let empresa= obtenerValoresInput();
         empresa.id=idAutogenerado;
         empresas.push(empresa);
-        console.log(empresa);
+        //console.log(empresa);
         modalConfirmarAgregar.hide();
         volverAtras();
         idAutogenerado++;
@@ -206,12 +212,6 @@ const obtenerValoresInput = () =>{
     return empresaNueva;
 }
 
-const volverAtras = ()=>{
-    document.getElementById('pagina-lista').style.display="block";
-    document.getElementById('pagina-agregar-modificar').style.display="none";
-    renderizarLista();
-}
-
 const validarCamposLlenos = () =>{
     let validar=true;
     if(document.getElementById('nombre-empresa').value==""){
@@ -249,7 +249,7 @@ const confirmarBorrarEmpresa = ()=>{
     volverAtras();
 }
 
-//Para la imagenes
+//Para las imagenes
 inputFile.addEventListener('change',  e => {
     if(e.target.files[0]){
         const reader = new FileReader();

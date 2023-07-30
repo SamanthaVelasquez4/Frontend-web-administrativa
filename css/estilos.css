@@ -110,13 +110,15 @@ p{
 .contenedor-inputs{
     margin: 10px 15px;
     box-sizing: border-box;
+    color: #000;
 }
 
-#imagen-empresa{
+#imagen-empresa, #imagen-producto{
     width: 90%;
     border-radius: 20px;
     margin:10px 0;
     background-color: white;
+    height: 170px;
 }
 
 .input-default{

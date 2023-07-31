@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="../css/estilos.css">
         <link rel="shortcut icon" href="../img/icon.png" type="image/x-icon">
         <script src="https://kit.fontawesome.com/0d0c0d47e9.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../css/estilosPedidos.css">
     </head>
     <body>
 
@@ -21,13 +22,13 @@
             
             <div class="container-fluid mt-4">
                 <div class="row">
-                    <div class="col-12 col-xl-6 col-lg-9 col-md-10 col-sm-11  contenedor-principal">
+                    <div class="col-12 col-xl-6 col-lg-8 col-md-10 col-sm-11  contenedor-principal">
                         <div class="header text-center">
-                            <div class="row">
-                                <div class="col-6 centrar-div">
+                            <div class="row container-fluid" style="box-sizing: content-box;">
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12 centrar-div">
                                     <p class="fs-3 fw-medium">Lista Pedidos</p>
                                 </div>
-                                <div class="col pt-3">
+                                <div class="col mt-3">
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="button-addon2">
                                         <button class="btn-close1" type="button" id=""><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -40,45 +41,151 @@
                         <div class="contenedor-lista overflow-auto" id="contenedor-lista-pedidos">
                             <section id="pedidos-agregar-repartidor">
                                 <div class="objeto row">
-                                    <div class="col-5 centrar-div">
+                                    <div class="col-12 col-xl-3 col-lg-3 col-md-3 col-sm-12 centrar-div">
                                         <img src="../img/producto.png" alt="Imagen Pedido" srcset=""> 
                                     </div>
-                                    <div class="col ms-2">
-                                        <p class="h4 fw-bold text-center">Pedido #1</p>
+                                    <div class="col ms-2 mb-1 text-center">
+                                        <p class="fs-5 fw-medium">Pedido #1</p>
+                                        <p class="fw-medium h6 " style="color: #fd8d07ff;">(Información cliente)</p>
                                         <div class="row">
                                             <div class="col">
-                                                <div class="row">
-                                                    <p class="fw-medium mt-2 mb-1" style="color: #fd8d07ff ; padding: 0;">Información Cliente</p>
-                                                </div>
-                                                <div class="row">
-                                                    <p class="fw-medium mt-2 mb-1" style="color: #fd8d07ff ; ">Nombre: </p>
-                                                    <p>Maria Martinez</p>
-                                                </div>
+                                                <p class="h6" style="color: #fd8d07ff;">Nombre:</p> 
+                                                <p class="h6">Maria Benitez</p>
                                             </div>
                                             <div class="col">
-                                                <div class="row">
-                                                    <p class="fw-medium mt-2 mb-1" style="color: #fd8d07ff ; padding: 0;">Información Factura</p>
-                                                </div>
-                                                <div class="row">
-                                                    <p class="fw-medium mt-2 mb-1" style="color: #fd8d07ff ;">Nombre: </p>
-                                                    <p>Maria Martinez</p>
-                                                </div>
+                                                <p class="h6" style="color: #fd8d07ff;">Número de teléfono:</p>
+                                                <p class="h6">2598-8745</p>
                                             </div>
                                         </div>
-                                        <div class="text-end fs-2 mt-3">
-                                            <button class="btn-default">Agregar Motorista</button>
+                                        <p class="h6" style="color: #fd8d07ff;">Dirección:</p>
+                                        <p class="h6">Col. Kennedy, casa #34, bloque 2</p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-xl-12 col-lg-5 col-md-12 col-sm-12 col-xxl-5 centrar-div">
+                                            <p class="fw-medium fs-5">Información pedido</p>
+                                            <p class="fw-medium" style="font-size: 1rem; color: #fd8d07ff;">(Factura #43)</p>
+                                            <p class="fw-medium">Adidas</p>
+                                        </div>
+                                        <div class="col centrar-div">
+                                            <p class="h6" style="color: #fd8d07ff;">Subtotal: </p>
+                                            <p class="">2598</p>
+                                        </div>
+                                        <div class="col centrar-div">
+                                            <p class="h6" style="color: #fd8d07ff;">ISV: </p>
+                                            <p class="">2598</p>
+                                        </div>
+                                        <div class="col centrar-div">
+                                            <p class="h6" style="color: #fd8d07ff;">Envio: </p>
+                                            <p class="">2598</p>
+                                        </div>
+                                        <div class="col centrar-div">
+                                            <p class="h6" style="color: #fd8d07ff;">Total: </p>
+                                            <p class="">2598</p>
                                         </div>
                                     </div>
+                                    <div class="text-end fs-2" style="color: #fd8d07ff;">
+                                        <i class="fa-solid fa-circle-plus ps-2 pe-2"></i>
+                                    </div>
                                 </div>
-
                             </section>
 
+                            <section id="pedidos-tomados-repartidor" style="display: none;">
+                                <div class="objeto row">
+                                    <div class="col-12 col-xl-3 col-lg-3 col-md-3 col-sm-12 centrar-div">
+                                        <img src="../img/producto.png" alt="Imagen Pedido" srcset=""> 
+                                    </div>
+                                    <div class="col ms-2 mb-1 text-center">
+                                        <p class="fs-5 fw-medium">Pedido #1</p>
+                                        <p class="fw-medium h6 " style="color: #fd8d07ff;">(Información cliente)</p>
+                                        <div class="row">
+                                            <div class="col">
+                                                <p class="h6" style="color: #fd8d07ff;">Nombre:</p> 
+                                                <p class="h6">Maria Benitez</p>
+                                            </div>
+                                            <div class="col">
+                                                <p class="h6" style="color: #fd8d07ff;">Número de teléfono:</p>
+                                                <p class="h6">2598-8745</p>
+                                            </div>
+                                        </div>
+                                        <p class="h6" style="color: #fd8d07ff;">Dirección:</p>
+                                        <p class="h6">Col. Kennedy, casa #34, bloque 2</p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-xl-12 col-lg-5 col-md-12 col-sm-12 col-xxl-5 centrar-div">
+                                            <p class="fw-medium fs-5">Información pedido</p>
+                                            <p class="fw-medium" style="font-size: 1rem; color: #fd8d07ff;">(Factura #43)</p>
+                                            <p class="fw-medium">Adidas</p>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row text-center">
+                                                <div class="col centrar-div">
+                                                    <p class="h6" style="color: #fd8d07ff;">Motorista: </p>
+                                                    <p class="">Mario Enrique</p>
+                                                </div>
+                                                <div class="col centrar-div">
+                                                    <p class="h6" style="color: #fd8d07ff;">Estado: </p>
+                                                    <p class="">En camino</p>
+                                                </div>
+                                                <p class="h6" style="color: #fd8d07ff;">Número de Teléfono: </p>
+                                                <p class="">3512-5267</p>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section id="pedidos-entregados-repartidor" style="display: none;">
+                                <div class="objeto row">
+                                    <div class="col-12 col-xl-3 col-lg-3 col-md-3 col-sm-12 centrar-div">
+                                        <img src="../img/producto.png" alt="Imagen Pedido" srcset=""> 
+                                    </div>
+                                    <div class="col ms-2 mb-1 text-center">
+                                        <p class="fs-5 fw-medium">Pedido #1</p>
+                                        <div class="row text-start">
+                                            <div class="col border-end text-center">
+                                                <p class="fw-medium h6">Información cliente</p>
+                                                <p class="h6" style="color: #fd8d07ff;">Nombre:</p> 
+                                                <p class="h6">Maria Benitez</p>
+                                                <p class="h6" style="color: #fd8d07ff;">Número de teléfono:</p>
+                                                <p class="h6">2598-8745</p>
+                                            </div>
+                                            <div class="col text-center">
+                                                <p class="fw-medium h6 text-center ">Información Empleado</p>
+                                                <p class="h6" style="color: #fd8d07ff;">Nombre:</p> 
+                                                <p class="h6">Marcos Benavides</p>
+                                                <p class="h6" style="color: #fd8d07ff;">Número de teléfono:</p>
+                                                <p class="h6">2598-8745</p>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2 fs-5">
+                                            <div class="col">
+                                                <i class="fa-solid fa-star" style="color: #fd8d07ff;"></i>
+                                                <i class="fa-solid fa-star" style="color: #fd8d07ff;"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </section>
                         </div>
                     </div>
+
+                    <div class="col-12 col-xl-2 col-lg-2 col-md-10 col-sm-12 centrar-div2">
+                        <button class="btn-default active" onclick="visualizarPedidos();" id="btn-pedidos">Pedidos</button>
+                        <button class="btn-default" id="btn-tomados" onclick="visualizarTomados();" >Tomados</button>
+                        <button class="btn-default" id="btn-entregados" onclick="visualizarEntregados();">Entregados</button>
+                    </div>
                 </div>
+
             </div>
         </section>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+        <script src="../js/controllerPedidos.js"></script>
     </body>
 </html>

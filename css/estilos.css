@@ -154,6 +154,10 @@ p{
     top: 50px;
 }
 
+.h5, .h4, .h3, .h1, .h6{
+    margin: 0;
+}
+
 @media (max-width: 767.98px){ 
     .objeto img{
         width: 50%;

@@ -238,6 +238,27 @@ const validarCamposLlenos = () =>{
     return validar;
 }
 
+function formatNumber(input) {
+
+    let value = input.value;
+  
+    value = value.replace(/\D/g, '');
+  
+    if (value.length > 4 && value.length <= 8) {
+      value = value.slice(0, 4) + '-' + value.slice(4);
+    }
+  
+    if (value.length > 9) {
+      value = value.slice(0, 9);
+    }
+  
+    if (value.length === 9) {
+      value = "+504 " + value;
+    }
+  
+    input.value = value;
+  }
+
 //Eliminar Empresa
 const borrarEmpresa = (id)=>{
     empresaBorrar=empresas.find(element=>element.id===id);

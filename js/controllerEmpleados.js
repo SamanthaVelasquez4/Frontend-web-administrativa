@@ -322,9 +322,30 @@ const validarCamposLlenos = ()=>{
     return validar;
 }
 
+function formatNumber(input) {
+
+  let value = input.value;
+
+  value = value.replace(/\D/g, '');
+
+  if (value.length > 4 && value.length <= 8) {
+    value = value.slice(0, 4) + '-' + value.slice(4);
+  }
+
+  if (value.length > 9) {
+    value = value.slice(0, 9);
+  }
+
+  if (value.length === 9) {
+    value = "+504 " + value;
+  }
+
+  input.value = value;
+}
+
 //verificar Contraseña
 const verificarContrasena = ()=>{
-    if(document.getElementById('verificar-contrasena-input').value==document.getElementById('contrasena-input').value){
+    if(document.getElementById('verificar-contrasena-input').value==document.getElementById('contrasena-input').value && document.getElementById('contrasena-input').value!="" && document.getElementById('verificar-contrasena-input').value!=""){
         document.getElementById('verificacion-contra').style.backgroundColor="green";
         return true;
     }else{

@@ -158,6 +158,12 @@ p{
     margin: 0;
 }
 
+@media (max-width: 1250px) { 
+    body{
+        background-image: url('../img/background2.jpeg');
+    }
+}
+
 @media (max-width: 767.98px){ 
     .objeto img{
         width: 50%;
@@ -170,8 +176,3 @@ p{
     }
 }
 
-@media (max-width: 1250px && max-width: 650.98px) { 
-    body{
-        background-image: url('../img/background2.jpeg');
-    }
-}

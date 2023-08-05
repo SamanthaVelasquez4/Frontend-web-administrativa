@@ -1,5 +1,5 @@
 body{
-    background-image: url('../img/background.jpg');
+    background-image: url('../img/background.jpeg');
     font-family: 'Ubuntu', sans-serif;
     padding: 30px 50px;
     color: #000;
@@ -161,5 +161,17 @@ p{
 @media (max-width: 767.98px){ 
     .objeto img{
         width: 50%;
+    }
+}
+
+@media (max-width: 650.98px) { 
+    body{
+        background-image: url('../img/backgroundTelefono.jpeg');
+    }
+}
+
+@media (max-width: 1250px && max-width: 650.98px) { 
+    body{
+        background-image: url('../img/background2.jpeg');
     }
 }

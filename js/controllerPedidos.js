@@ -636,7 +636,7 @@ const confirmarSeleccionMotorista = ()=>{
     motoristaSeleccionado.mensajes.push(mensaje);
 
     //Borrar el pedido de la lista de pedidos
-    pedidos.splice(pedidos.findIndex(element=> element.id===pedidoSeleccionado.id),1);
+    pedidos.splice(pedidos.indexOf(pedidoSeleccionado),1);
     modalConfirmarSeleccion.hide();
 
     //Mostrar pedido en el apartado de tomados

@@ -2,15 +2,44 @@
     .centrar-div2{
         flex-direction: column;
     }
+    
 }
 
 @media (max-width: 650.98px) { 
+    body{
+        padding: 10px;
+    }
+
+    ms-4{
+        margin-left: 10px !important;
+    }
+
     .centrar-div2{
         flex-direction: column;
     }
 }
 
+.header {
+    padding: 10px 0 0 0;
+}
+
 .active{
-    background: linear-gradient(#1c1c1c, #72716d);
+    background: black;
     color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding-top: 5px;
+}
+
+.contenedor-lista{
+    height: 24rem;
+}
+
+.contenedor-navegacion{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+
+.objeto img{
+    margin: 0;
 }

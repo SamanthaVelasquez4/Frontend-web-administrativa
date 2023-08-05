@@ -15,17 +15,17 @@
     </head>
     <body>
 
-        <section id="pagina-lista-renderizar" class="ms-4">
+        <section id="pagina-lista-renderizar"  class="container">
             <a href="../index.html" class="p-4">
                 <i class="fa-solid fa-backward fs-1"></i>
             </a>
             
-            <div class="container-fluid mt-4">
+            <div class="container mt-4">
                 <div class="row">
-                    <div class="col-12 col-xl-6 col-lg-8 col-md-10 col-sm-11  contenedor-principal">
+                    <div class="col-12 col-xl-7 col-lg-8 col-md-10 col-sm-11  contenedor-principal">
                         <div class="header text-center">
                             <div class="row container-fluid" style="box-sizing: content-box;">
-                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12 centrar-div">
+                                <div class="col-12 col-xl-5 col-lg-5 col-md-5 col-sm-12 centrar-div">
                                     <p class="fs-3 fw-medium">Lista Pedidos</p>
                                 </div>
                                 <div class="col mt-3">
@@ -35,7 +35,11 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                            <div class="contenedor-navegacion fs-5 fw-medium">
+                                <div class="active" onclick="visualizarPedidos();" id="btn-pedidos">Pedidos</div>
+                                <div class="" id="btn-tomados" onclick="visualizarTomados();">Tomados</div>
+                                <div class="" id="btn-entregados" onclick="visualizarEntregados();">Entregados</div>
+                            </div>
                             
                         </div>
                         <div class="contenedor-lista overflow-auto" id="contenedor-lista-pedidos">
@@ -62,7 +66,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-12 col-xl-12 col-lg-5 col-md-12 col-sm-12 col-xxl-5 centrar-div">
-                                            <p class="fw-medium fs-5">Información pedido</p>
+                                            <p class="fw-medium fs-5 text-center">Información pedido</p>
                                             <p class="fw-medium" style="font-size: 1rem; color: #fd8d07ff;">(Factura #43)</p>
                                             <p class="fw-medium">Adidas</p>
                                         </div>
@@ -141,7 +145,7 @@
                                     <div class="col-12 col-xl-3 col-lg-3 col-md-3 col-sm-12 centrar-div">
                                         <img src="../img/producto.png" alt="Imagen Pedido" srcset=""> 
                                     </div>
-                                    <div class="col ms-2 mb-1 text-center">
+                                    <div class="col mb-1 text-center">
                                         <p class="fs-5 fw-medium">Pedido #1</p>
                                         <div class="row text-start">
                                             <div class="col border-end text-center">
@@ -174,14 +178,7 @@
                             </section>
                         </div>
                     </div>
-
-                    <div class="col-12 col-xl-2 col-lg-2 col-md-10 col-sm-12 centrar-div2">
-                        <button class="btn-default active" onclick="visualizarPedidos();" id="btn-pedidos">Pedidos</button>
-                        <button class="btn-default" id="btn-tomados" onclick="visualizarTomados();" >Tomados</button>
-                        <button class="btn-default" id="btn-entregados" onclick="visualizarEntregados();">Entregados</button>
-                    </div>
                 </div>
-
             </div>
         </section>
 

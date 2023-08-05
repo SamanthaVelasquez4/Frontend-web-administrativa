@@ -1,24 +1,3 @@
-@media (min-width: 991.98px) { 
-    .centrar-div2{
-        flex-direction: column;
-    }
-    
-}
-
-@media (max-width: 650.98px) { 
-    body{
-        padding: 10px;
-    }
-
-    ms-4{
-        margin-left: 10px !important;
-    }
-
-    .centrar-div2{
-        flex-direction: column;
-    }
-}
-
 .header {
     padding: 10px 0 0 0;
 }
@@ -42,4 +21,55 @@
 
 .objeto img{
     margin: 0;
+}
+
+.modal-header{
+    background-color: #fd8d07;
+    color: black;
+    border: 0;
+    display: flex;
+    justify-content: center;
+    height: 3rem;
+}
+
+.modal-content{
+    background-image: url('../img/backgroud-negro.jpg');
+}
+
+.titulo{
+    font-size: 17px;
+}
+
+.contenedor-seleccionar-repartidor .objeto img{
+    width: 60%;
+}
+
+.contenedor-seleccionar-repartidor .btn-default{
+    margin: 0;
+}
+
+.informacion-seleccionar-motorista{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+@media (min-width: 991.98px) { 
+    .centrar-div2{
+        flex-direction: column;
+    }
+    
+}
+
+@media (max-width: 650.98px) { 
+    body{
+        padding: 10px;
+    }
+
+    ms-4{
+        margin-left: 10px !important;
+    }
+
+    .centrar-div2{
+        flex-direction: column;
+    }
 }

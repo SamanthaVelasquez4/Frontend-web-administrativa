@@ -1,76 +1,118 @@
-var productos=[
-    {
-        id:1,
-        img: "../img/producto.png",
-        nombre: "Camisa Deportiva",
-        empresaNombre: "Nike",
-        precio: 200,
-        tallas:["L", "XS", "S", "M", "XL"],
-        colores:["Rojo", "Azul", "Verde"],
-    },
-    {
-        id:2,
-        img: "../img/producto2.jpg",
-        nombre: "Leggins",
-        empresaNombre: "Adidas",
-        precio: 200,
-        tallas:["L", "XS", "S", "M", "XL"],
-        colores:["Verde", "Rojo", "Azul"],
-    },
-    {
-        id:3,
-        img: "../img/producto3.webp",
-        nombre: "Tenis Deportivos",
-        empresaNombre: "Jordan",
-        precio: 200,
-        tallas:["36", "37", "33", "39"],
-        colores:["Rojo", "Azul", "Verde"],
-    }
-]
-
-var empresas=["Nike", "Adidas", "Jordan"];
+var productos=[];
+let empresas=[];
 
 //Variables
-var idAutogenerado=4;
-var imgActual="";
-var productoModificar={};
-var empresaElegida="";
-var arrayTallas=[];
-var arrayColores=[];
-var contTallas=0;
-var contColores=0;
-var productoBorrar={};
+let imgActual="";
+let productoModificar={};
+let empresaElegida="";
+let arrayTallas=[];
+let arrayColores=[];
+let contTallas=0;
+let contColores=0;
+let productoBorrar;
 const modalConfirmarAgregar= new bootstrap.Modal(document.getElementById('modalConfirmarAgregar'));
 const modalConfirmarModificar= new bootstrap.Modal(document.getElementById('modalConfirmarModificar'));
 const modalConfirmarBorrar= new bootstrap.Modal(document.getElementById('modalConfirmarBorrar'));
 const inputFile= document.getElementById('input-file');
 const modalCamposVacios= new bootstrap.Modal(document.getElementById('modalCamposVacios'));
+const modalWarning= new bootstrap.Modal(document.getElementById('modalWarning'));
+
+
+//obtener Empresas
+const obtenerEmpresas = async() =>{
+    try{let respuesta = await fetch('http://localhost:5555/empresas/administrador/nombres',
+    {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json", //MIME type 
+        },
+    });
+
+    let a = await respuesta.json();
+        if(a.status){
+            empresas=a.respuesta;
+            generarSelect();
+        }else{
+            console.log(a);
+            modalWarning.show();
+        }
+    }catch{
+        modalWarning.show();
+    }
+}
+
+//obtener y renderizar productos
+const ObtenerProductos = async() =>{
+    try{
+        let respuesta = await fetch('http://localhost:5555/productos',
+        {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json", //MIME type 
+            },
+        });
+
+        let a = await respuesta.json();
+        if(a.status){
+            productos=a.respuesta;
+            renderizarLista();
+        }else{
+            console.log(a);
+            modalWarning.show();
+        }
+    }catch{
+        modalWarning.show();
+    }
+
+    /*window.location.href="../index.html";*/
+}
 
 //Renderizar lista
-const renderizarLista = ()=>{
+const renderizarLista = async()=>{
     document.getElementById('contenedor-lista-productos').innerHTML="";
-    productos.forEach(producto => {
-        let tallas="-";
-        producto.tallas.forEach(talla =>{
+    productos.forEach(productosRenderizar);
+}
+
+const productosRenderizar = async(producto) =>{
+    try{
+         //obtener Imagen
+        let respuesta = await fetch(`http://localhost:5555/productos/${producto._id}/obtener/imagen`,
+        {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json", //MIME type 
+            },
+        });
+
+        let a = await respuesta.json();
+        if(a.status){
+            let imagenProducto= a.respuesta.img;
+
+            let tallas="-";
+            producto.tallas.forEach(talla =>{
             tallas+=talla+" - ";
-        });
-        let colores="-";
-        producto.colores.forEach(color=>{
+            });
+            let colores="-";
+            producto.colores.forEach(color=>{
             colores+=color+" - ";
-        });
-        document.getElementById('contenedor-lista-productos').innerHTML+=
-        `<div class="objeto row">
+            });
+    
+            //Obtener nombre empresa
+            let empresaProducto= empresas.find(element=>element._id===producto._idEmpresa);
+            let nombreEmpresa= empresaProducto.nombre;
+            document.getElementById('contenedor-lista-productos').innerHTML+=
+            `<div class="objeto row">
             <div class="col-12 col-xl-4 col-lg-5 col-md-5 col-sm-11 centrar-div">
-                <img src="${producto.img}" alt="Logo Producto" srcset=""> 
+                <img src="${imagenProducto}" alt="Logo Producto" srcset=""> 
             </div>
             <div class="col ms-2">
-                <p class="fw-bold id-style text-center">#${producto.id}</p>
+                <p class="fw-bold id-style text-center">${producto._id}</p>
                 <div class="row">
                     <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <p>Nombre producto:</p>
                         <p style="color: #fd8d07ff;" class="fw-medium">${producto.nombre}</p>
                         <p>Empresa:</p>
-                        <p style="color: #fd8d07ff;" class="fw-medium">${producto.empresaNombre}</p>
+                        <p style="color: #fd8d07ff;" class="fw-medium">${nombreEmpresa}</p>
                         <p>Precio:</p>
                         <p style="color: #fd8d07ff;" class="fw-medium">${producto.precio} lps</p>
                     </div>
@@ -82,20 +124,24 @@ const renderizarLista = ()=>{
                     </div>
                 </div>
                 <div class="text-end fs-2">
-                    <i class="fa-solid fa-pen-to-square p-1 me-2" style="color: #2c2c2c;" onclick="modificarProducto(${producto.id});" ></i>
-                    <i class="fa-solid fa-trash p-1 me-2" style="color: red;" onclick="borrarProducto(${producto.id})" data-bs-toggle="modal" data-bs-target="#modalConfirmarBorrar"></i>
+                    <i class="fa-solid fa-pen-to-square p-1 me-2" style="color: #2c2c2c;" onclick="modificarProducto('${producto._id}');" ></i>
+                    <i class="fa-solid fa-trash p-1 me-2" style="color: red;" onclick="borrarProducto('${producto._id}')" data-bs-toggle="modal" data-bs-target="#modalConfirmarBorrar"></i>
                 </div>
             </div>
-        </div>`;
-    });
-
-
+            </div>`;
+        }else{
+            modalWarning.show();
+        }  
+    }catch{
+        modalWarning.show();
+    }
+   
 }
 
 const volverAtras = ()=>{
     document.getElementById('pagina-lista').style.display="block";
     document.getElementById('pagina-agregar-modificar').style.display="none";
-    renderizarLista();
+    ObtenerProductos();
 }
 
 //Agregar Producto
@@ -117,27 +163,45 @@ const agregarProducto = ()=>{
 
     document.getElementById('imagen-producto').setAttribute('src',`https://tiny-img.com/images/icons/upload-icon.png`);
     document.getElementById('label-input-file').innerHTML="Elegir imagen";
-    document.getElementById('id-producto').innerHTML=`#${idAutogenerado}`;
+    document.getElementById('id-producto').innerHTML=``;
 
 }
 
-const confirmarAgregarProducto =()=>{
-    if(validarCamposLlenos()){
-        let producto= obtenerValoresInput();
-        producto.id=idAutogenerado;
-        productos.push(producto);
-        console.log(producto);
-        modalConfirmarAgregar.hide();
-        volverAtras();
-        idAutogenerado++;
-    }else{
-        modalConfirmarAgregar.hide();
-        modalCamposVacios.show();
+const confirmarAgregarProducto =async()=>{
+
+    try{
+        if(validarCamposLlenos()){
+            let producto= obtenerValoresInput();
+            let respuesta = await fetch(`http://localhost:5555/productos`,
+            {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json", //MIME type 
+                },
+                body: JSON.stringify(producto) 
+            });
+            let a= await respuesta.json();
+            if(a.status){
+                modalConfirmarAgregar.hide();
+                volverAtras();
+            }else{
+                console.log(a);
+                modalWarning.show();
+                volverAtras();
+            }
+    
+        }else{
+            modalConfirmarAgregar.hide();
+            modalCamposVacios.show();
+        }
+
+    }catch{
+        modalWarning.show();
     }
 }
 
 //Modificar Producto
-const modificarProducto = (id)=>{
+const modificarProducto = async(id)=>{
     document.getElementById('pagina-lista').style.display="none";
     document.getElementById('pagina-agregar-modificar').style.display="block";
 
@@ -148,12 +212,23 @@ const modificarProducto = (id)=>{
     document.getElementById('modificar-producto-titulo').style.display="block";
 
     document.getElementById('label-input-file').innerHTML="Cambiar";
-    document.getElementById('id-producto').innerHTML=`#${id}`;
+    document.getElementById('id-producto').innerHTML=`${id}`;
 
-    productoModificar=productos.find(element=>element.id===id);
+    productoModificar=productos.find(element=>element._id===id);
 
     //Poner valores de los inputs
-    document.getElementById('imagen-producto').setAttribute('src', `${productoModificar.img}`);
+    //obtener Imagen
+    let respuesta = await fetch(`http://localhost:5555/productos/${id}/obtener/imagen`,
+    {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json", //MIME type 
+        },
+    });
+
+    let a = await respuesta.json();
+    let imagenProducto=a.respuesta.img;
+    document.getElementById('imagen-producto').setAttribute('src', `${imagenProducto}`);
     borrarValoresInputs();
     imgActual=productoModificar.img;
     document.getElementById('nombre-producto').value=productoModificar.nombre;
@@ -178,19 +253,41 @@ const modificarProducto = (id)=>{
         </div>`;
         contTallas++;
     })
-    document.getElementById('select-empresa').value=productoModificar.empresaNombre;
+    document.getElementById('select-empresa').value=productoModificar._idEmpresa;
     empresaElegida=productoModificar.empresaNombre;
 
 }
 
-const confirmarModificarProducto=()=>{
+const confirmarModificarProducto=async()=>{
+
     if(validarCamposLlenos()){
         let producto= obtenerValoresInput();
-        producto.id=productoModificar.id;
         producto.img=imgActual;
-        productos[productos.indexOf(productoModificar)]=producto;
-        modalConfirmarModificar.hide();
-        volverAtras();
+        try{
+            let respuesta = await fetch(`http://localhost:5555/productos/${productoModificar._id}`,
+            {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json", //MIME type 
+                },
+                body: JSON.stringify(producto) 
+            });
+        
+            let a=await respuesta.json();
+            if(a.status){
+                modalConfirmarModificar.hide();
+                volverAtras();
+            }else{
+                console.log(a);
+                modalConfirmarModificar.hide();
+                modalWarning.show();
+                volverAtras();
+            }
+        }catch{
+            modalConfirmarModificar.hide();
+            modalWarning.show();
+            volverAtras();
+        }
     }else{
         modalConfirmarModificar.hide();
         modalCamposVacios.show();
@@ -199,13 +296,32 @@ const confirmarModificarProducto=()=>{
 
 //Eliminar Producto
 const borrarProducto = (id)=>{
-    productoBorrar=productos.find(element=>element.id===id);
+    productoBorrar=id;
 }
 
-const confirmarBorrarProducto = ()=>{
-    productos.splice(productos.indexOf(productoBorrar),1);
-    modalConfirmarBorrar.hide();
-    volverAtras();
+const confirmarBorrarProducto = async()=>{
+    try{
+        let respuesta = await fetch(`http://localhost:5555/productos/${productoBorrar}`,
+        {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json", //MIME type 
+            },
+        });
+        let a = await respuesta.json();
+        if(a.status){
+            modalConfirmarBorrar.hide();
+            volverAtras();
+        }else{
+            console.log(a);
+            modalConfirmarBorrar.hide();
+            modalWarning.show();
+        }
+
+    }catch{
+        modalConfirmarBorrar.hide();
+        modalWarning.show();
+    }
 }
 
 //Para la imagenes
@@ -228,7 +344,7 @@ const generarSelect = ()=>{
     document.getElementById('select-empresa').innerHTML='<option value="default">Seleccione Empresa</option>';
     empresas.forEach(empresa =>{
         document.getElementById('select-empresa').innerHTML += 
-        `<option value="${empresa}">${empresa}</option>`;  
+        `<option value="${empresa._id}">${empresa.nombre}</option>`;  
     });
 }
 
@@ -239,10 +355,11 @@ const empresaEscogida = ()=>{
 //Funciones agregar y borrar tallas
 const agregarTalla= ()=>{
     if(document.getElementById('input-agregar-talla').value!=""){
-        arrayTallas.push(document.getElementById('input-agregar-talla').value);
+        let talla=document.getElementById('input-agregar-talla').value;
+        arrayTallas.push(talla.toUpperCase());
         document.getElementById('contenedor-agregar-tallas').innerHTML+=
         `<div class="objeto-agregado" onclick="borrarTalla(${contTallas});">
-            <p>${document.getElementById('input-agregar-talla').value}</p>
+            <p>${talla.toUpperCase()}</p>
             <p class="ms-3 btn-close"></p>
         </div>`;
         contTallas++;
@@ -332,10 +449,9 @@ const borrarValoresInputs = ()=>{
 
 const obtenerValoresInput= ()=>{
     let producto={
-        id:0,
         img: imgActual,
         nombre:document.getElementById('nombre-producto').value ,
-        empresaNombre: empresaElegida,
+        _idEmpresa: empresaElegida,
         precio: document.getElementById('precio-producto').value,
         tallas:arrayTallas,
         colores:arrayColores,
@@ -345,4 +461,5 @@ const obtenerValoresInput= ()=>{
 }
 
 //Funciones que inician antes de la interaccion con el usuario
-renderizarLista();
+obtenerEmpresas();
+ObtenerProductos();

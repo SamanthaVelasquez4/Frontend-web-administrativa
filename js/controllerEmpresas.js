@@ -1,14 +1,14 @@
-var empresas= [];
+let empresas= [];
 
 //Variables
 const modalConfirmarAgregar= new bootstrap.Modal(document.getElementById('modalConfirmarAgregar'));
-var empresaModificar={};
+let empresaModificar={};
 const modalConfirmarModificar= new bootstrap.Modal(document.getElementById('modalConfirmarModificar'));
-var empresaBorrar="";
+let empresaBorrar="";
 const modalConfirmarBorrar= new bootstrap.Modal(document.getElementById('modalConfirmarBorrar'));
 const modalWarning= new bootstrap.Modal(document.getElementById('modalWarning'));
 const inputFile= document.getElementById('input-file');
-var imgActual;
+let imgActual;
 const modalCamposVacios= new bootstrap.Modal(document.getElementById('modalCamposVacios'));
 
 //Obtener y renderizar lista de empresas
@@ -196,7 +196,6 @@ const confirmarmodificarEmpresa = async()=>{
     if(validarCamposLlenos()){
         let empresa= obtenerValoresInput();
         empresa.img=imgActual;
-
         try{
             let respuesta = await fetch(`http://localhost:5555/empresas/${empresaModificar._id}`,
             {
@@ -318,23 +317,34 @@ const borrarEmpresa = (id)=>{
 
 const confirmarBorrarEmpresa = async()=>{
     try{
-        let respuesta = await fetch(`http://localhost:5555/empresas/${empresaBorrar}`,
+        let respuesta1 = await fetch(`http://localhost:5555/productos/empresa/${empresaBorrar}`,
         {
             method: 'DELETE',
             headers: {
                 "Content-Type": "application/json", //MIME type 
             },
         });
-        let a = await respuesta.json();
-        if(a.status){
-            modalConfirmarBorrar.hide();
-            volverAtras();
+        let a1 = await respuesta1.json();
+        if(a1.status){
+            let respuesta = await fetch(`http://localhost:5555/empresas/${empresaBorrar}`,
+            {
+                method: 'DELETE',
+                headers: {
+                    "Content-Type": "application/json", //MIME type 
+                },
+            });
+            let a = await respuesta.json();
+            if(a.status){
+                modalConfirmarBorrar.hide();
+                volverAtras();
+            }else{
+                console.log(a);
+                modalConfirmarBorrar.hide();
+                modalWarning.show();
+            }
         }else{
-            console.log(a);
-            modalConfirmarBorrar.hide();
             modalWarning.show();
         }
-
     }catch{
         modalConfirmarBorrar.hide();
         modalWarning.show();

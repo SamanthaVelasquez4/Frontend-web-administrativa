@@ -55,11 +55,11 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-5 col-xl-5 col-xxl-5 centrar-div mt-4">
                                     <img src="https://tiny-img.com/images/icons/upload-icon.png" alt="" srcset="" id="imagen-producto">
-                                    <input type="file" name="" id="input-file" class="text-center form-control" style="display: none;">
+                                    <input type="file" name="" id="input-file" class="text-center form-control" style="display: none;" accept="image/*">
                                     <label for="input-file" id="label-input-file" class="btn-default mt-1 mb-1">Elegir imagen</label>
                                 </div>
-                                <div class="col">
-                                    <p class="fs-3 fw-bold text-center" style="color: #fd8d07ff;" id="id-producto"></p>
+                                <div class="col" style="padding-top: 1.2rem;">
+                                    <p class="fw-bold text-center" style="color: #fd8d07ff; font-size: 1.3rem;" id="id-producto"></p>
                                     <input type="text" placeholder="Nombre" id="nombre-producto" class="form-control input-default">
                                     <select name="" id="select-empresa" class="form-select input-default" onchange="empresaEscogida();">
                                     </select>
@@ -179,8 +179,19 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                <p class="fw-bold fs-5">Error al agregar Empresa</p>
+                <p class="fw-bold fs-5">Error al agregar producto</p>
                 <p style="color: #fd8d07ff;" class="fw-medium">Verifique que todos los campos esten llenos.</p>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalWarning" tabindex="-1" aria-labelledby="modalWarningLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content" >
+                <div class="modal-body">
+                    <img style="width: 100%;" src="https://img.freepik.com/free-vector/500-internal-server-error-concept-illustration_114360-1924.jpg?w=996&t=st=1692851177~exp=1692851777~hmac=80300129675d023680f55075a9e28b2011e7b7bada7bde82d6f2ca102bb7264f" alt="">
+                    <p class="text-center">¡Ooops, error en el servidor intente de nuevo más tarde!</p>
                 </div>
             </div>
             </div>

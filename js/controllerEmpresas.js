@@ -115,7 +115,7 @@ const confirmarAgregarEmpresa= ()=>{
         let empresa= obtenerValoresInput();
         empresa.id=idAutogenerado;
         empresas.push(empresa);
-        //console.log(empresa);
+        console.log(empresa);
         modalConfirmarAgregar.hide();
         volverAtras();
         idAutogenerado++;
@@ -167,6 +167,7 @@ const confirmarmodificarEmpresa = ()=>{
         empresa.id=empresaModificar.id;
         empresa.img=imgActual;
         empresas[empresas.indexOf(empresaModificar)]=empresa;
+        console.log(empresa);
         modalConfirmarModificar.hide();
         volverAtras();
     }else{

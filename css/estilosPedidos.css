@@ -63,6 +63,7 @@
 @media (max-width: 650.98px) { 
     body{
         padding: 10px;
+        padding-left: 0;
     }
 
     ms-4{

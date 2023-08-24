@@ -1,66 +1,39 @@
-var empleados=[
-    {
-        id:1,
-        primerNombre:"Juan",
-        segundoNombre:"Roberto",
-        primerApellido:"Godoy",
-        segundoApellido:"Figueroa",
-        usuario:"juangodoy@ssport.hn",
-        contrasena:"1234",
-        numTelefono:"8239-8542",
-        genero:"M",
-        edad:30,
-        tipoVehiculo:"Moto",
-        placa:"HVDK-58D",
-        calificacion:2,
-        img:"../img/usuario.png"
-    },
-    {
-        id:2,
-        primerNombre:"Maria",
-        segundoNombre:"Nicolle",
-        primerApellido:"Godoy",
-        segundoApellido:"Alvarez",
-        usuario:"mariagodoy@ssport.hn",
-        contrasena:"1234",
-        numTelefono:"8239-8542",
-        genero:"F",
-        edad:22,
-        tipoVehiculo:"Carro",
-        placa:"HVDK-58D",
-        calificacion:4,
-        img:"../img/usuario2.png"
-    },
-    {
-        id:3,
-        primerNombre:"Juan",
-        segundoNombre:"Enrique",
-        primerApellido:"Godoy",
-        segundoApellido:"Gonzalez",
-        usuario:"enriquegodoy@ssport.hn",
-        contrasena:"1234",
-        numTelefono:"8239-8542",
-        genero:"M",
-        edad:30,
-        tipoVehiculo:"Moto",
-        placa:"HVDK-9KH",
-        calificacion:1,
-        img:"../img/usuario.png"
-    },
-
-]
+let empleados=[];
     
-
-
 //Variables
-var idAutogenerado=4;
 const modalConfirmarAgregar= new bootstrap.Modal(document.getElementById('modalConfirmarAgregar'));
 const modalConfirmarModificar= new bootstrap.Modal(document.getElementById('modalConfirmarModificar'));
 const modalConfirmarBorrar= new bootstrap.Modal(document.getElementById('modalConfirmarBorrar'));
 const modalCamposVacios= new bootstrap.Modal(document.getElementById('modalCamposVacios'));
-var empleadoBorrar={};
-var empleadoModificar={};
-var imgActual="";
+const modalWarning= new bootstrap.Modal(document.getElementById('modalWarning'));
+let empleadoBorrar;
+let empleadoModificar={};
+let imgActual="";
+
+//Obtener y renderizar usuarios
+const obtenerMotoristas = async() =>{
+    try{let respuesta = await fetch('http://localhost:5555/motoristas',
+    {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json", //MIME type 
+        },
+    });
+
+    let a = await respuesta.json();
+        if(a.status){
+            empleados=a.respuesta;
+            renderizarLista();
+        }else{
+            console.log(a);
+            modalWarning.show();
+        }
+    }catch{
+        modalWarning.show();
+    }
+
+    /*window.location.href="../index.html";*/
+}
 
 //Renderizar lista
 const renderizarLista = ()=>{
@@ -82,7 +55,7 @@ const renderizarLista = ()=>{
                 </div>
             </div>
             <div class="col ms-2">
-                <p class="fw-bold id-style text-center">#${empleado.id}</p>
+                <p class="fw-bold id-style text-center">${empleado._id}</p>
                 <div class="row">
                     <div class="col-6">
                         <p>Nombre:</p>
@@ -102,8 +75,8 @@ const renderizarLista = ()=>{
                     </div>
                 </div>
                 <div class="text-end fs-2 mt-3">
-                    <i class="fa-solid fa-pen-to-square p-1 me-2" style="color: #2c2c2c;" onclick="modificarEmpleado(${empleado.id})"></i>
-                    <i class="fa-solid fa-trash p-1 me-2" style="color: red;" onclick="borrarEmpleado(${empleado.id})" data-bs-toggle="modal" data-bs-target="#modalConfirmarBorrar"></i>
+                    <i class="fa-solid fa-pen-to-square p-1 me-2" style="color: #2c2c2c;" onclick="modificarEmpleado('${empleado._id}')"></i>
+                    <i class="fa-solid fa-trash p-1 me-2" style="color: red;" onclick="borrarEmpleado('${empleado._id}')" data-bs-toggle="modal" data-bs-target="#modalConfirmarBorrar"></i>
                 </div>
             </div>
         </div>`;
@@ -113,14 +86,14 @@ const renderizarLista = ()=>{
 const volverAtras = ()=>{
     document.getElementById('pagina-lista').style.display="block";
     document.getElementById('pagina-agregar-modificar').style.display="none";
-    renderizarLista();
+    obtenerMotoristas();
 }
 
 //Agregar empleado
 const agregarEmpleado = ()=>{
     //Borrar inputs
     borrarValoresInputs();
-    document.getElementById('id-empleado').innerHTML=`#${idAutogenerado}`;
+    document.getElementById('id-empleado').innerHTML=``;
 
     //Mostrar la pagina para agregar empresa y ocultar la lista
     document.getElementById('pagina-lista').style.display="none";
@@ -137,18 +110,36 @@ const agregarEmpleado = ()=>{
     document.getElementById('imagen-empleado').setAttribute('src',`https://cdn-icons-png.flaticon.com/512/848/848006.png?w=740&t=st=1690708873~exp=1690709473~hmac=4578ff43a45d0339bd35be6cbf2df7eec47ee60706178fd26de21ba79f6adcec`);
 }
 
-const confirmarAgregarEmpleado= ()=>{
-    if(validarCamposLlenos() && verificarContrasena()){
-        let empleado= obtenerValoresInput();
-        empleado.id=idAutogenerado;
-        empleados.push(empleado);
-        //console.log(empleado);
-        modalConfirmarAgregar.hide();
-        volverAtras();
-        idAutogenerado++;
-    }else{
-        modalConfirmarAgregar.hide();
-        modalCamposVacios.show();
+const confirmarAgregarEmpleado= async()=>{
+
+    try{
+        if(validarCamposLlenos()){
+            let motorista= obtenerValoresInput();
+            let respuesta = await fetch(`http://localhost:5555/motoristas`,
+            {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json", //MIME type 
+                },
+                body: JSON.stringify(motorista) 
+            });
+            let a= await respuesta.json();
+            if(a.status){
+                modalConfirmarAgregar.hide();
+                volverAtras();
+            }else{
+                console.log(a);
+                modalWarning.show();
+                volverAtras();
+            }
+    
+        }else{
+            modalConfirmarAgregar.hide();
+            modalCamposVacios.show();
+        }
+
+    }catch{
+        modalWarning.show();
     }
     
 }
@@ -164,9 +155,9 @@ const modificarEmpleado = (id)=>{
     document.getElementById('agregar-empleado-titulo').style.display="none";
     document.getElementById('modificar-empleado-titulo').style.display="block";
 
-    document.getElementById('id-empleado').innerHTML=`#${id}`;
+    document.getElementById('id-empleado').innerHTML=`${id}`;
 
-    empleadoModificar=empleados.find(element=>element.id===id);
+    empleadoModificar=empleados.find(element=>element._id===id);
 
     //Poner valores de los inputs
     document.getElementById('imagen-empleado').setAttribute('src',`${empleadoModificar.img}`);
@@ -194,30 +185,69 @@ const modificarEmpleado = (id)=>{
     imgActual=empleadoModificar.img;
 }
 
-const confirmarmodificarEmpleado = ()=>{
-    if(validarCamposLlenos() && verificarContrasena()){
-        let empleado= obtenerValoresInput();
-        empleado.id=empleadoModificar.id;
-        empleado.img=imgActual;
-        empleado.calificacion=empleadoModificar.calificacion;
-        empleados[empleados.indexOf(empleadoModificar)]=empleado;
-        modalConfirmarModificar.hide();
-        volverAtras();
+const confirmarmodificarEmpleado = async()=>{
+    if(validarCamposLlenos()){
+        let empresa= obtenerValoresInput();
+        empresa.img=imgActual;
+        try{
+            let respuesta = await fetch(`http://localhost:5555/motoristas/${empleadoModificar._id}`,
+            {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json", //MIME type 
+                },
+                body: JSON.stringify(empresa) 
+            });
+        
+            let a=await respuesta.json();
+            if(a.status){
+                modalConfirmarModificar.hide();
+                volverAtras();
+            }else{
+                console.log(a);
+                modalConfirmarModificar.hide();
+                modalWarning.show();
+                volverAtras();
+            }
+        }catch{
+            modalConfirmarModificar.hide();
+            modalWarning.show();
+            volverAtras();
+        }
     }else{
         modalConfirmarModificar.hide();
         modalCamposVacios.show();
-    } 
+    }
 }
 
 //Borrar empleado
 const borrarEmpleado = (id)=>{
-    empleadoBorrar=empleados.find(element=>element.id===id);
+    empleadoBorrar=id;
 }
 
-const confirmarBorrarEmpleado = ()=>{
-    empleados.splice(empleados.indexOf(empleadoBorrar),1);
-    modalConfirmarBorrar.hide();
-    volverAtras();
+const confirmarBorrarEmpleado = async()=>{
+    try{
+        let respuesta = await fetch(`http://localhost:5555/motoristas/${empleadoBorrar}`,
+        {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json", //MIME type 
+            },
+        });
+        let a = await respuesta.json();
+        if(a.status){
+            modalConfirmarBorrar.hide();
+            volverAtras();
+        }else{
+            console.log(a);
+            modalConfirmarBorrar.hide();
+            modalWarning.show();
+        }
+
+    }catch{
+        modalConfirmarBorrar.hide();
+        modalWarning.show();
+    }
 }
 
 //Actualizar imagen con cambio de genero
@@ -271,7 +301,6 @@ const obtenerValoresInput = () =>{
     }
     
     let empleado={
-        id:0,
         primerNombre: document.getElementById('primer-nombre-empleado').value.charAt(0).toUpperCase() + document.getElementById('primer-nombre-empleado').value.slice(1) ,
         segundoNombre:document.getElementById('segundo-nombre-empleado').value.charAt(0).toUpperCase() + document.getElementById('segundo-nombre-empleado').value.slice(1) ,
         primerApellido:document.getElementById('primer-apellido-empleado').value.charAt(0).toUpperCase()+document.getElementById('primer-apellido-empleado').value.slice(1),
@@ -283,7 +312,7 @@ const obtenerValoresInput = () =>{
         edad:document.getElementById('edad-input').value,
         tipoVehiculo:tipoVehiculo,
         placa:document.getElementById('placa-input').value.toUpperCase(),
-        calificacion:0,
+        calificacion:5,
         img:imgActual
     }
 
@@ -343,6 +372,10 @@ function formatNumber(input) {
   input.value = value;
 }
 
+const placaMayuscula = ()=>{
+    let placa= document.getElementById('placa-input');
+    placa.value= placa.value.toUpperCase();
+}
 //verificar Contraseña
 const verificarContrasena = ()=>{
     if(document.getElementById('verificar-contrasena-input').value==document.getElementById('contrasena-input').value && document.getElementById('contrasena-input').value!="" && document.getElementById('verificar-contrasena-input').value!=""){
@@ -355,4 +388,4 @@ const verificarContrasena = ()=>{
 }
 
 //Funciones que inician antes de la interaccion con el usuario
-renderizarLista();
+obtenerMotoristas();

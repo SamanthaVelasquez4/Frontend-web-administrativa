@@ -349,8 +349,6 @@ const confirmarBorrarEmpresa = async()=>{
         modalConfirmarBorrar.hide();
         modalWarning.show();
     }
-    
-    
 }
 
 //Para las imagenes

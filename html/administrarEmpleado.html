@@ -22,7 +22,7 @@
             
             <div class="container-fluid mt-4">
                 <div class="row">
-                    <div class="col-12 col-xl-6 col-lg-8 col-lg-9 col-md-10 col-sm-11 contenedor-principal">
+                    <div class="col-12 col-xxl-6 col-xl-7 col-lg-8 col-lg-9 col-md-10 col-sm-11 contenedor-principal">
                         <div class="header text-center">
                             <p class="fs-3 fw-medium">Lista Empleados</p>
                         </div>
@@ -56,7 +56,7 @@
                                 <div class="col-3 centrar-div mt-4">
                                     <img src="https://cdn-icons-png.flaticon.com/512/309/309594.png?w=740&t=st=1690708517~exp=1690709117~hmac=3ac4414e6b2d7f05af0725e2c865e3010e9f83c7c91b955b3c3a52c8408fe7df" alt="" srcset="" id="imagen-empleado">
                                 </div>
-                                <div class="col">
+                                <div class="col" style="padding-top: 1.2rem;">
                                     <p class="fs-3 fw-bold text-center" style="color: #fd8d07ff;" id="id-empleado"></p>
                                     <div class="row">
                                         <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
@@ -143,7 +143,7 @@
                                 </div>
                                 <div class="col-12 col-xl-7 col-lg-7 col-md-7 col-sm-6">
                                     <p class="fw-medium mt-2 mb-1" style="color: #fd8d07ff ;">Placa: </p>
-                                    <input type="text" placeholder="Placa" class="form-control input-default mt-1" id="placa-input">
+                                    <input type="text" placeholder="Placa" class="form-control input-default mt-1" id="placa-input" oninput="placaMayuscula();">
                                 </div>
                             </div>
                         </div>
@@ -233,6 +233,17 @@
                 <div class="modal-body">
                 <p class="fw-bold fs-5">Error al agregar Empresa</p>
                 <p style="color: #fd8d07ff;" class="fw-medium">1. Verifique que todos los campos esten llenos. <br>2. Verifique contraseña.</p>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalWarning" tabindex="-1" aria-labelledby="modalWarningLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content" >
+                <div class="modal-body">
+                    <img style="width: 100%;" src="https://img.freepik.com/free-vector/500-internal-server-error-concept-illustration_114360-1924.jpg?w=996&t=st=1692851177~exp=1692851777~hmac=80300129675d023680f55075a9e28b2011e7b7bada7bde82d6f2ca102bb7264f" alt="">
+                    <p class="text-center">¡Ooops, error en el servidor intente de nuevo más tarde!</p>
                 </div>
             </div>
             </div>

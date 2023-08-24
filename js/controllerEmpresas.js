@@ -1,46 +1,40 @@
-var empresas= [
-    {
-        id: 1,
-        nombre: "Adidas",
-        tipo:["Ropa" , "Calzado"],
-        horaApertura: "07:00",
-        horaCierre: "18:00",
-        numTelefono: "2578-2152",
-        direccion: "Mall Multiplaza, segundo piso a la par de Helados Sarita",
-        img: "../img/adidas.jpg"
-    },
-    {
-        id: 2,
-        nombre: "Jordan",
-        tipo:["Calzado"],
-        horaApertura: "09:00",
-        horaCierre: "20:00",
-        numTelefono: "2578-2152",
-        direccion: "Mall Multiplaza",
-        img: "../img/jordan.jpg"
-    },
-    {
-        id: 3,
-        nombre: "Nike",
-        tipo:["Ropa", "Calzado"],
-        horaApertura: "08:00",
-        horaCierre: "19:00",
-        numTelefono: "2578-2152",
-        direccion: "Mall Multiplaza",
-        img: "../img/nike.jpg"
-    },
-]
+var empresas= [];
 
 //Variables
-var idAutogenerado=4;
 const modalConfirmarAgregar= new bootstrap.Modal(document.getElementById('modalConfirmarAgregar'));
 var empresaModificar={};
 const modalConfirmarModificar= new bootstrap.Modal(document.getElementById('modalConfirmarModificar'));
-var empresaBorrar={};
+var empresaBorrar="";
 const modalConfirmarBorrar= new bootstrap.Modal(document.getElementById('modalConfirmarBorrar'));
+const modalWarning= new bootstrap.Modal(document.getElementById('modalWarning'));
 const inputFile= document.getElementById('input-file');
 var imgActual;
 const modalCamposVacios= new bootstrap.Modal(document.getElementById('modalCamposVacios'));
+
+//Obtener y renderizar lista de empresas
+const obtenerEmpresas = async() =>{
+    try{let respuesta = await fetch('http://localhost:5555/empresas',
+    {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json", //MIME type 
+        },
+    });
+
+    let a = await respuesta.json();
+        if(a.status){
+            empresas=a.respuesta;
+            renderizarLista();
+        }else{
+            console.log(a);
+            modalWarning.show();
+        }
+    }catch{
+        modalWarning.show();
+    }
+
+    /*window.location.href="../index.html";*/
+}
 
 //Renderizar lista
 const renderizarLista = ()=>{
@@ -52,11 +46,11 @@ const renderizarLista = ()=>{
         })
         document.getElementById('contenedor-lista-empresas').innerHTML+=
         `<div class="objeto row">
-            <div class="col-12 col-xl-4 col-lg-6 col-md-5 col-sm-11 centrar-div">
+            <div class="col-12 col-xl-4 col-lg-5 col-md-5 col-sm-11 centrar-div">
                 <img src="${empresa.img}" alt="Logo Empresa" srcset=""> 
             </div>
             <div class="col ms-2">
-                <p class="fw-bold id-style text-center">#${empresa.id}</p>
+                <p class="fw-bold id-style text-center">${empresa._id}</p>
                 <div class="row">
                     <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <p>Nombre empresa:</p>
@@ -73,8 +67,8 @@ const renderizarLista = ()=>{
                 </div>
                 <p>Dirección: ${empresa.direccion}</p>
                 <div class="text-end fs-2">
-                    <i class="fa-solid fa-pen-to-square p-1 me-2" style="color: #2c2c2c;" onclick="modificarEmpresa(${empresa.id})"></i>
-                    <i class="fa-solid fa-trash p-1 me-2" style="color: red;" onclick="borrarEmpresa(${empresa.id})" data-bs-toggle="modal" data-bs-target="#modalConfirmarBorrar"></i>
+                    <i class="fa-solid fa-pen-to-square p-1 me-2" style="color: #2c2c2c;" onclick="modificarEmpresa('${empresa._id}')"></i>
+                    <i class="fa-solid fa-trash p-1 me-2" style="color: red;" onclick="borrarEmpresa('${empresa._id}')" data-bs-toggle="modal" data-bs-target="#modalConfirmarBorrar"></i>
                 </div>
             </div>
         </div>`;
@@ -84,14 +78,14 @@ const renderizarLista = ()=>{
 const volverAtras = ()=>{
     document.getElementById('pagina-lista').style.display="block";
     document.getElementById('pagina-agregar-modificar').style.display="none";
-    renderizarLista();
+    obtenerEmpresas();
 }
 
 //Agregar empresa
 const agregarEmpresa = ()=>{
     //Borrar inputs
     borrarValoresInputs();
-    document.getElementById('id-empresa').innerHTML=`#${idAutogenerado}`;
+    document.getElementById('id-empresa').innerHTML=``;
 
     //Mostrar la pagina para agregar empresa y ocultar la lista
     document.getElementById('pagina-lista').style.display="none";
@@ -110,24 +104,42 @@ const agregarEmpresa = ()=>{
 
 }
 
-const confirmarAgregarEmpresa= ()=>{
-    if(validarCamposLlenos()){
-        let empresa= obtenerValoresInput();
-        empresa.id=idAutogenerado;
-        empresas.push(empresa);
-        console.log(empresa);
-        modalConfirmarAgregar.hide();
-        volverAtras();
-        idAutogenerado++;
-    }else{
-        modalConfirmarAgregar.hide();
-        modalCamposVacios.show();
+const confirmarAgregarEmpresa= async()=>{
+    try{
+        if(validarCamposLlenos()){
+            let empresa= obtenerValoresInput();
+            let respuesta = await fetch(`http://localhost:5555/empresas`,
+            {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json", //MIME type 
+                },
+                body: JSON.stringify(empresa) 
+            });
+            let a= await respuesta.json();
+            if(a.status){
+                modalConfirmarAgregar.hide();
+                volverAtras();
+            }else{
+                console.log(a);
+                modalWarning.show();
+                volverAtras();
+            }
+    
+        }else{
+            modalConfirmarAgregar.hide();
+            modalCamposVacios.show();
+        }
+
+    }catch{
+        modalWarning.show();
     }
+    
     
 }
 
 //Modificar empresa
-const modificarEmpresa = (id)=>{
+const modificarEmpresa = async(id)=>{
     document.getElementById('pagina-lista').style.display="none";
     document.getElementById('pagina-agregar-modificar').style.display="block";
 
@@ -139,37 +151,77 @@ const modificarEmpresa = (id)=>{
 
     document.getElementById('label-input-file').innerHTML="Cambiar";
 
-    empresaModificar=empresas.find(element => element.id===id);
-
-    //poner valores en los inputs
-    document.getElementById('imagen-empresa').setAttribute('src',`${empresaModificar.img}`);
-    borrarValoresInputs();
-    imgActual=empresaModificar.img;
-    document.getElementById('nombre-empresa').value=empresaModificar.nombre;
-    document.getElementById('id-empresa').innerHTML=`#${empresaModificar.id}`;
-    document.getElementById('num-telefono-empresa').value=empresaModificar.numTelefono;
-    document.getElementById('hora-inicio').value=empresaModificar.horaApertura;
-    document.getElementById('hora-final').value=empresaModificar.horaCierre;
-    document.getElementById('direccion-empresa').value=empresaModificar.direccion;
-
-    empresaModificar.tipo.forEach(tipo =>{
-        if(tipo=="Ropa"){
-            document.getElementById('checkbox-ropa').checked=true;
-        }else if(tipo=="Calzado"){
-            document.getElementById('checkbox-calzado').checked=true;
+    try{
+        let respuesta = await fetch(`http://localhost:5555/empresas/${id}`,
+        {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json", //MIME type 
+            },
+        });
+    
+        let a = await respuesta.json();
+        if(a.status){
+            empresaModificar=a.respuesta;
+            //poner valores en los inputs
+            document.getElementById('imagen-empresa').setAttribute('src',`${empresaModificar.img}`);
+            borrarValoresInputs();
+            imgActual=empresaModificar.img;
+            document.getElementById('nombre-empresa').value=empresaModificar.nombre;
+            document.getElementById('id-empresa').innerHTML=`${empresaModificar._id}`;
+            document.getElementById('num-telefono-empresa').value=empresaModificar.numTelefono;
+            document.getElementById('hora-inicio').value=empresaModificar.horaApertura;
+            document.getElementById('hora-final').value=empresaModificar.horaCierre;
+            document.getElementById('direccion-empresa').value=empresaModificar.direccion;
+    
+            empresaModificar.tipo.forEach(tipo =>{
+                if(tipo=="Ropa"){
+                    document.getElementById('checkbox-ropa').checked=true;
+                }else if(tipo=="Calzado"){
+                    document.getElementById('checkbox-calzado').checked=true;
+                }
+            });
+        }else{
+            console.log(a);
+            modalWarning.show();
+            volverAtras();
         }
-    });
+    }catch{
+        modalWarning.show();
+        volverAtras();
+    } 
 }
 
-const confirmarmodificarEmpresa = ()=>{
+const confirmarmodificarEmpresa = async()=>{
     if(validarCamposLlenos()){
         let empresa= obtenerValoresInput();
-        empresa.id=empresaModificar.id;
         empresa.img=imgActual;
-        empresas[empresas.indexOf(empresaModificar)]=empresa;
-        console.log(empresa);
-        modalConfirmarModificar.hide();
-        volverAtras();
+
+        try{
+            let respuesta = await fetch(`http://localhost:5555/empresas/${empresaModificar._id}`,
+            {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json", //MIME type 
+                },
+                body: JSON.stringify(empresa) 
+            });
+        
+            let a=await respuesta.json();
+            if(a.status){
+                modalConfirmarModificar.hide();
+                volverAtras();
+            }else{
+                console.log(a);
+                modalConfirmarModificar.hide();
+                modalWarning.show();
+                volverAtras();
+            }
+        }catch{
+            modalConfirmarModificar.hide();
+            modalWarning.show();
+            volverAtras();
+        }
     }else{
         modalConfirmarModificar.hide();
         modalCamposVacios.show();
@@ -200,7 +252,6 @@ const obtenerValoresInput = () =>{
         tipoEmpresa.push("Calzado");
     };
     let empresaNueva={
-        id: 0,
         nombre: document.getElementById('nombre-empresa').value,
         tipo:tipoEmpresa,
         horaApertura:document.getElementById('hora-inicio').value ,
@@ -262,13 +313,34 @@ function formatNumber(input) {
 
 //Eliminar Empresa
 const borrarEmpresa = (id)=>{
-    empresaBorrar=empresas.find(element=>element.id===id);
+    empresaBorrar=id;
 }
 
-const confirmarBorrarEmpresa = ()=>{
-    empresas.splice(empresas.indexOf(empresaBorrar),1);
-    modalConfirmarBorrar.hide();
-    volverAtras();
+const confirmarBorrarEmpresa = async()=>{
+    try{
+        let respuesta = await fetch(`http://localhost:5555/empresas/${empresaBorrar}`,
+        {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json", //MIME type 
+            },
+        });
+        let a = await respuesta.json();
+        if(a.status){
+            modalConfirmarBorrar.hide();
+            volverAtras();
+        }else{
+            console.log(a);
+            modalConfirmarBorrar.hide();
+            modalWarning.show();
+        }
+
+    }catch{
+        modalConfirmarBorrar.hide();
+        modalWarning.show();
+    }
+    
+    
 }
 
 //Para las imagenes
@@ -287,4 +359,4 @@ inputFile.addEventListener('change',  e => {
 });
 
 //Funciones que inician antes de la interaccion con el usuario
-renderizarLista();
+obtenerEmpresas();

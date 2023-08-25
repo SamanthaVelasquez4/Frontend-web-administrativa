@@ -36,7 +36,7 @@
                                 </div>
                             </div>
                             <div class="contenedor-navegacion fs-5 fw-medium">
-                                <div class="active" onclick="visualizarPedidos();" id="btn-pedidos">Pedidos</div>
+                                <div class="active" onclick="obtenerPedidos();" id="btn-pedidos">Pedidos</div>
                                 <div class="" id="btn-tomados" onclick="visualizarTomados();">Tomados</div>
                                 <div class="" id="btn-entregados" onclick="visualizarEntregados();">Entregados</div>
                             </div>
@@ -126,6 +126,17 @@
                     <button type="button" class="btn-default" onclick="confirmarSeleccionMotorista();">Aceptar</button>
                 </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalWarning" tabindex="-1" aria-labelledby="modalWarningLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content" >
+                <div class="modal-body">
+                    <img style="width: 100%;" src="https://img.freepik.com/free-vector/500-internal-server-error-concept-illustration_114360-1924.jpg?w=996&t=st=1692851177~exp=1692851777~hmac=80300129675d023680f55075a9e28b2011e7b7bada7bde82d6f2ca102bb7264f" alt="">
+                    <p class="text-center">¡Ooops, error en el servidor intente de nuevo más tarde!</p>
+                </div>
+            </div>
             </div>
         </div>
 

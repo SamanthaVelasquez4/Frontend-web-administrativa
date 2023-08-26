@@ -38,41 +38,50 @@ const obtenerEmpresas = async() =>{
 
 //Renderizar lista
 const renderizarLista = ()=>{
-    document.getElementById('contenedor-lista-empresas').innerHTML="";
-    empresas.forEach(empresa => {
-        let tipoEmpresa="- ";
-        empresa.tipo.forEach(tipo => {
-            tipoEmpresa+=tipo+" - ";
-        })
-        document.getElementById('contenedor-lista-empresas').innerHTML+=
-        `<div class="objeto row">
-            <div class="col-12 col-xl-4 col-lg-5 col-md-5 col-sm-11 centrar-div">
-                <img src="${empresa.img}" alt="Logo Empresa" srcset=""> 
-            </div>
-            <div class="col ms-2">
-                <p class="fw-bold id-style text-center">${empresa._id}</p>
-                <div class="row">
-                    <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                        <p>Nombre empresa:</p>
-                        <p style="color: #fd8d07ff;" class="fw-medium">${empresa.nombre}</p>
-                        <p>Horario de atención:</p>
-                        <p style="color: #fd8d07ff;" class="fw-medium">${empresa.horaApertura}-${empresa.horaCierre}</p>
-                    </div>
-                    <div class="col">
-                        <p>Tipo de empresa:</p>
-                        <p style="color: #fd8d07ff;" class="fw-medium">${tipoEmpresa}</p>
-                        <p>Número teléfono:</p>
-                        <p style="color: #fd8d07ff;" class="fw-medium">${empresa.numTelefono}</p>
-                    </div>
-                </div>
-                <p>Dirección: ${empresa.direccion}</p>
-                <div class="text-end fs-2">
-                    <i class="fa-solid fa-pen-to-square p-1 me-2" style="color: #2c2c2c;" onclick="modificarEmpresa('${empresa._id}')"></i>
-                    <i class="fa-solid fa-trash p-1 me-2" style="color: red;" onclick="borrarEmpresa('${empresa._id}')" data-bs-toggle="modal" data-bs-target="#modalConfirmarBorrar"></i>
-                </div>
-            </div>
+    if(empresas.length<=0){
+        document.getElementById('contenedor-lista-empresas').innerHTML=
+        `<div class="vacio" style="color: #ffffff;">
+            <i class="fa-regular fa-clock fa-spin"></i>
+            No hay empresas agregadas...
         </div>`;
-    })
+    }else{
+        document.getElementById('contenedor-lista-empresas').innerHTML="";
+        empresas.forEach(empresa => {
+            let tipoEmpresa="- ";
+            empresa.tipo.forEach(tipo => {
+                tipoEmpresa+=tipo+" - ";
+            })
+            document.getElementById('contenedor-lista-empresas').innerHTML+=
+            `<div class="objeto row">
+                <div class="col-12 col-xl-4 col-lg-5 col-md-5 col-sm-11 centrar-div">
+                    <img src="${empresa.img}" alt="Logo Empresa" srcset=""> 
+                </div>
+                <div class="col ms-2">
+                    <p class="fw-bold id-style text-center">${empresa._id}</p>
+                    <div class="row">
+                        <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                            <p>Nombre empresa:</p>
+                            <p style="color: #fd8d07ff;" class="fw-medium">${empresa.nombre}</p>
+                            <p>Horario de atención:</p>
+                            <p style="color: #fd8d07ff;" class="fw-medium">${empresa.horaApertura}-${empresa.horaCierre}</p>
+                        </div>
+                        <div class="col">
+                            <p>Tipo de empresa:</p>
+                            <p style="color: #fd8d07ff;" class="fw-medium">${tipoEmpresa}</p>
+                            <p>Número teléfono:</p>
+                            <p style="color: #fd8d07ff;" class="fw-medium">${empresa.numTelefono}</p>
+                        </div>
+                    </div>
+                    <p>Dirección: ${empresa.direccion}</p>
+                    <div class="text-end fs-2">
+                        <i class="fa-solid fa-pen-to-square p-1 me-2" style="color: #2c2c2c;" onclick="modificarEmpresa('${empresa._id}')"></i>
+                        <i class="fa-solid fa-trash p-1 me-2" style="color: red;" onclick="borrarEmpresa('${empresa._id}')" data-bs-toggle="modal" data-bs-target="#modalConfirmarBorrar"></i>
+                    </div>
+                </div>
+            </div>`;
+        })
+    }
+    
 }
 
 const volverAtras = ()=>{

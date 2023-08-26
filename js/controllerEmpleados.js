@@ -37,50 +37,59 @@ const obtenerMotoristas = async() =>{
 
 //Renderizar lista
 const renderizarLista = ()=>{
-    document.getElementById('contenedor-lista-empleados').innerHTML=``;
-    empleados.forEach(empleado =>{
-        let calificacion="";
-        for(let i=0; i<empleado.calificacion;i++){
-            calificacion+='<i class="fa-solid fa-star" style="color: #fd8d07ff;"></i>';
-        }
-        for(let i=0; i<5-empleado.calificacion;i++){
-            calificacion+='<i class="fa-solid fa-star"></i>';
-        }
-        document.getElementById('contenedor-lista-empleados').innerHTML+=
-        `<div class="objeto row">
-            <div class="col-12 col-xl-4 col-lg-4 col-md-5 col-sm-11 centrar-div">
-                <img src="${empleado.img}" alt="Imagen Usuario" srcset=""> 
-                <div class="fs-5">
-                   ${calificacion}
-                </div>
-            </div>
-            <div class="col ms-2">
-                <p class="fw-bold id-style text-center">${empleado._id}</p>
-                <div class="row">
-                    <div class="col-6">
-                        <p>Nombre:</p>
-                        <p style="color: #fd8d07ff;" class="fw-medium">${empleado.primerNombre} ${empleado.primerApellido}</p>
-                        <p>Edad:</p>
-                        <p style="color: #fd8d07ff;" class="fw-medium">${empleado.edad} años</p>
-                        <p>Genero:</p>
-                        <p style="color: #fd8d07ff;" class="fw-medium">${empleado.genero}</p>
-                    </div>
-                    <div class="col">
-                        <p>Tipo de vehículo:</p>
-                        <p style="color: #fd8d07ff;" class="fw-medium">${empleado.tipoVehiculo}</p>
-                        <p>Placa:</p>
-                        <p style="color: #fd8d07ff;" class="fw-medium">${empleado.placa}</p>
-                        <p>Número teléfono:</p>
-                        <p style="color: #fd8d07ff;" class="fw-medium">${empleado.numTelefono}</p>
-                    </div>
-                </div>
-                <div class="text-end fs-2 mt-3">
-                    <i class="fa-solid fa-pen-to-square p-1 me-2" style="color: #2c2c2c;" onclick="modificarEmpleado('${empleado._id}')"></i>
-                    <i class="fa-solid fa-trash p-1 me-2" style="color: red;" onclick="borrarEmpleado('${empleado._id}')" data-bs-toggle="modal" data-bs-target="#modalConfirmarBorrar"></i>
-                </div>
-            </div>
+    if(empleados.length<=0){
+        document.getElementById('contenedor-lista-empleados').innerHTML=
+        `<div class="vacio" style="color: #ffffff;">
+            <i class="fa-regular fa-clock fa-spin"></i>
+            No hay empleados contratados aún...
         </div>`;
-    })
+    }else{
+        document.getElementById('contenedor-lista-empleados').innerHTML=``;
+        empleados.forEach(empleado =>{
+            let calificacion="";
+            for(let i=0; i<empleado.calificacion;i++){
+                calificacion+='<i class="fa-solid fa-star" style="color: #fd8d07ff;"></i>';
+            }
+            for(let i=0; i<5-empleado.calificacion;i++){
+                calificacion+='<i class="fa-solid fa-star"></i>';
+            }
+            document.getElementById('contenedor-lista-empleados').innerHTML+=
+            `<div class="objeto row">
+                <div class="col-12 col-xl-4 col-lg-4 col-md-5 col-sm-11 centrar-div">
+                    <img src="${empleado.img}" alt="Imagen Usuario" srcset=""> 
+                    <div class="fs-5">
+                       ${calificacion}
+                    </div>
+                </div>
+                <div class="col ms-2">
+                    <p class="fw-bold id-style text-center">${empleado._id}</p>
+                    <div class="row">
+                        <div class="col-6">
+                            <p>Nombre:</p>
+                            <p style="color: #fd8d07ff;" class="fw-medium">${empleado.primerNombre} ${empleado.primerApellido}</p>
+                            <p>Edad:</p>
+                            <p style="color: #fd8d07ff;" class="fw-medium">${empleado.edad} años</p>
+                            <p>Genero:</p>
+                            <p style="color: #fd8d07ff;" class="fw-medium">${empleado.genero}</p>
+                        </div>
+                        <div class="col">
+                            <p>Tipo de vehículo:</p>
+                            <p style="color: #fd8d07ff;" class="fw-medium">${empleado.tipoVehiculo}</p>
+                            <p>Placa:</p>
+                            <p style="color: #fd8d07ff;" class="fw-medium">${empleado.placa}</p>
+                            <p>Número teléfono:</p>
+                            <p style="color: #fd8d07ff;" class="fw-medium">${empleado.numTelefono}</p>
+                        </div>
+                    </div>
+                    <div class="text-end fs-2 mt-3">
+                        <i class="fa-solid fa-pen-to-square p-1 me-2" style="color: #2c2c2c;" onclick="modificarEmpleado('${empleado._id}')"></i>
+                        <i class="fa-solid fa-trash p-1 me-2" style="color: red;" onclick="borrarEmpleado('${empleado._id}')" data-bs-toggle="modal" data-bs-target="#modalConfirmarBorrar"></i>
+                    </div>
+                </div>
+            </div>`;
+        })
+    }
+    
 }
 
 const volverAtras = ()=>{

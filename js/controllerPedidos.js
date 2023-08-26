@@ -23,7 +23,6 @@ const obtenerPedidos = async() =>{
         let a = await respuesta.json();
         if(a.status){
             pedidos=a.respuesta;
-            //console.log(pedidos);
             visualizarPedidos();
         }else{
             console.log(a);
@@ -46,62 +45,68 @@ const visualizarPedidos= ()=>{
     document.getElementById('btn-pedidos').classList.add('active');
     document.getElementById('btn-tomados').classList.remove('active');
     document.getElementById('btn-entregados').classList.remove('active');
-    
-    document.getElementById('contenedor-lista-pedidos').innerHTML="";
 
-    pedidos.forEach(pedido =>{
-        let factura=pedido.factura[0];
-        document.getElementById('contenedor-lista-pedidos').innerHTML+=
-        `<div class="objeto row" data-bs-toggle="modal" data-bs-target="#modalInfoPedido" onclick="visualizarInfoPedido('${pedido._id}')">
-            <div class="col-12 col-xl-3 col-lg-3 col-md-3 col-sm-12 centrar-div">
-                <img src="${pedido.img}" alt="Imagen Pedido" srcset=""> 
-            </div>
-            <div class="col ms-2 mb-1 text-center">
-                <p class="fs-5 fw-medium">${pedido._id}</p>
-                <p class="fw-medium h6 " style="color: #fd8d07ff;">(Información cliente)</p>
+    if(pedidos.length<=0){
+        document.getElementById('contenedor-lista-pedidos').innerHTML=
+        `<div class="vacio" style="color: #ffffff;">
+            <i class="fa-regular fa-clock fa-spin"></i>
+            Esperando pedidos de los clientes...
+        </div>`;   
+    }else{
+        document.getElementById('contenedor-lista-pedidos').innerHTML="";
+
+        pedidos.forEach(pedido =>{
+            let factura=pedido.factura[0];
+            document.getElementById('contenedor-lista-pedidos').innerHTML+=
+            `<div class="objeto row" data-bs-toggle="modal" data-bs-target="#modalInfoPedido" onclick="visualizarInfoPedido('${pedido._id}')">
+                <div class="col-12 col-xl-3 col-lg-3 col-md-3 col-sm-12 centrar-div">
+                    <img src="${pedido.img}" alt="Imagen Pedido" srcset=""> 
+                </div>
+                <div class="col ms-2 mb-1 text-center">
+                    <p class="fs-5 fw-medium">${pedido._id}</p>
+                    <p class="fw-medium h6 " style="color: #fd8d07ff;">(Información cliente)</p>
+                    <div class="row">
+                        <div class="col">
+                            <p class="h6" style="color: #fd8d07ff;">Nombre:</p> 
+                            <p class="h6">${factura.cliente.nombre}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h6" style="color: #fd8d07ff;">Número de teléfono:</p>
+                            <p class="h6">${factura.cliente.numTelefono}</p>
+                        </div>
+                    </div>
+                    <p class="h6" style="color: #fd8d07ff;">Dirección:</p>
+                    <p class="h6">${pedido.ubicacion}</p>
+                </div>
                 <div class="row">
-                    <div class="col">
-                        <p class="h6" style="color: #fd8d07ff;">Nombre:</p> 
-                        <p class="h6">${factura.cliente.nombre}</p>
+                    <div class="col-12 col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xxl-5 centrar-div">
+                        <p class="fw-medium fs-5 text-center">Información Factura</p>
+                        <p class="fw-medium" style="font-size: 0.8rem; color: #fd8d07ff;">(${pedido._idFactura})</p>
+                        <p class="fw-medium">${factura.empresa.nombre}</p>
                     </div>
-                    <div class="col">
-                        <p class="h6" style="color: #fd8d07ff;">Número de teléfono:</p>
-                        <p class="h6">${factura.cliente.numTelefono}</p>
+                    <div class="col centrar-div">
+                        <p class="h6" style="color: #fd8d07ff;">Subtotal: </p>
+                        <p class="h6">${factura.subtotal}</p>
+                    </div>
+                    <div class="col centrar-div">
+                        <p class="h6" style="color: #fd8d07ff;">ISV: </p>
+                        <p class="h6">${factura.isv}</p>
+                    </div>
+                    <div class="col centrar-div">
+                        <p class="h6" style="color: #fd8d07ff;">Envio: </p>
+                        <p class="h6">${pedido.costoEnvio}</p>
+                    </div>
+                    <div class="col centrar-div">
+                        <p class="h6" style="color: #fd8d07ff;">Total: </p>
+                        <p class="h6">${factura.total}</p>
                     </div>
                 </div>
-                <p class="h6" style="color: #fd8d07ff;">Dirección:</p>
-                <p class="h6">${pedido.ubicacion}</p>
-            </div>
-            <div class="row">
-                <div class="col-12 col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xxl-5 centrar-div">
-                    <p class="fw-medium fs-5 text-center">Información Factura</p>
-                    <p class="fw-medium" style="font-size: 0.8rem; color: #fd8d07ff;">(${pedido._idFactura})</p>
-                    <p class="fw-medium">${factura.empresa.nombre}</p>
+                <div class="text-end fs-2" style="color: #fd8d07ff;" onclick="agregarMotorista('${pedido._id}');" data-bs-toggle="modal" data-bs-target="#modalAgregarMotorista")>
+                    <i class="fa-solid fa-circle-plus ps-2 pe-2"></i>
                 </div>
-                <div class="col centrar-div">
-                    <p class="h6" style="color: #fd8d07ff;">Subtotal: </p>
-                    <p class="h6">${factura.subtotal}</p>
-                </div>
-                <div class="col centrar-div">
-                    <p class="h6" style="color: #fd8d07ff;">ISV: </p>
-                    <p class="h6">${factura.isv}</p>
-                </div>
-                <div class="col centrar-div">
-                    <p class="h6" style="color: #fd8d07ff;">Envio: </p>
-                    <p class="h6">${pedido.costoEnvio}</p>
-                </div>
-                <div class="col centrar-div">
-                    <p class="h6" style="color: #fd8d07ff;">Total: </p>
-                    <p class="h6">${factura.total}</p>
-                </div>
-            </div>
-            <div class="text-end fs-2" style="color: #fd8d07ff;" onclick="agregarMotorista('${pedido._id}');" data-bs-toggle="modal" data-bs-target="#modalAgregarMotorista")>
-                <i class="fa-solid fa-circle-plus ps-2 pe-2"></i>
-            </div>
-        </div> `;
-    });
-    
-
+            </div> `;
+        });
+    }
 }
 
 //Obtener motoristas y renderizar motoristas
@@ -116,7 +121,7 @@ const agregarMotorista= async(id) =>{
         });
 
         let a = await respuesta.json();
-        if(a.status){
+        if(a.status && a.respuesta.length>0){
             repartidores=a.respuesta;
             //renderizar
             document.getElementById('contenedor-repartidores').innerHTML="";
@@ -147,6 +152,12 @@ const agregarMotorista= async(id) =>{
             });
             pedidoSeleccionado=id;
             console.log(pedidoSeleccionado);
+        }else if(a.respuesta.length<=0){
+            document.getElementById('contenedor-repartidores').innerHTML=
+            `<div class="vacio" style="color: #ffffff;">
+                <i class="fa-regular fa-clock fa-spin"></i>
+                No hay empleados contratados actualmente...
+            </div> `;
         }else{
             console.log(a);
             modalWarning.show();
@@ -224,7 +235,7 @@ const visualizarTomados= async()=>{
         });
 
         let a = await respuesta.json();
-        if(a.status){
+        if(a.status && a.respuesta.length>0){
             let pedidosTomados=a.respuesta;
             document.getElementById('contenedor-lista-tomados').innerHTML="";
             pedidosTomados.forEach(pedido =>{
@@ -252,7 +263,7 @@ const visualizarTomados= async()=>{
                     </div>
                     <div class="row">
                         <div class="col-12 col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xxl-5 centrar-div">
-                            <p class="fw-medium fs-5">Información factura</p>
+                            <p class="fw-medium fs-5">Información pedido</p>
                             <p class="fw-medium" style="font-size: 0.8rem; color: #fd8d07ff;">(Factura #${pedido._idFactura})</p>
                             <p class="fw-medium">${factura.empresa.nombre}</p>
                         </div>
@@ -273,6 +284,12 @@ const visualizarTomados= async()=>{
                     </div>
                 </div>`;
             });
+        }else if(a.respuesta.length<=0){
+            document.getElementById('contenedor-lista-tomados').innerHTML=
+            `<div class="vacio mt-2" style="color: #ffffff;">
+                <i class="fa-regular fa-folder-open fa-bounce"></i>
+                No hay pedidos tomados...
+            </div>`; 
         }else{
             console.log(a);
             modalWarning.show();
@@ -305,7 +322,7 @@ const visualizarEntregados= async()=>{
         });
 
         let a = await respuesta.json();
-        if(a.status){
+        if(a.status && a.respuesta.length>0){
             pedidos=a.respuesta;
             let pedidosEntregados=a.respuesta
             //console.log(pedidosEntregados);
@@ -351,6 +368,12 @@ const visualizarEntregados= async()=>{
                     </div> 
                 </div>`;
             })
+        }else if(a.respuesta.length<=0){
+            document.getElementById('contenedor-lista-entregados').innerHTML=
+            `<div class="vacio mt-2" style="color: #ffffff;">
+                <i class="fa-regular fa-folder-open fa-bounce"></i>
+                No se ha entregado ni un pedido aún...
+            </div>`; 
         }else{
             console.log(a);
             modalWarning.show();

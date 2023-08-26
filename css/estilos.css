@@ -154,6 +154,11 @@ p{
     top: 50px;
 }
 
+.vacio i{
+    font-size: 2rem;
+    margin: 1rem;
+}
+
 .h5, .h4, .h3, .h1, .h6{
     margin: 0;
 }

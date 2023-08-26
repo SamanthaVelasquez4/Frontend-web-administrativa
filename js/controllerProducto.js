@@ -69,8 +69,16 @@ const ObtenerProductos = async() =>{
 
 //Renderizar lista
 const renderizarLista = async()=>{
-    document.getElementById('contenedor-lista-productos').innerHTML="";
-    productos.forEach(productosRenderizar);
+    if(productos.length<=0){
+        document.getElementById('contenedor-lista-productos').innerHTML=
+        `<div class="vacio" style="color: #ffffff;">
+            <i class="fa-regular fa-clock fa-spin"></i>
+            No se han agregado productos...
+        </div>`;
+    }else{
+        document.getElementById('contenedor-lista-productos').innerHTML="";
+        productos.forEach(productosRenderizar);
+    }
 }
 
 const productosRenderizar = async(producto) =>{
